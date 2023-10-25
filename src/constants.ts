@@ -1,3 +1,5 @@
+import { DefaultTheme } from 'react-jss';
+
 import { WeaponGroupings } from './types.js';
 
 export const MANIFEST_TIMEOUT = 1000 * 60 * 5;
@@ -127,3 +129,10 @@ export const GROUPED_PATTERNS = WEAPON_GROUPINGS.reduce<readonly number[]>(
 );
 
 export const ROOT_PRESENTATION_NODE_HASH = 2642502414;
+
+export const THEME = {
+  BLACK: '#222',
+  WHITE: '#fff',
+  GRAY_LIGHTEST: '#ddd',
+  YELLOW: '#eade8b',
+} satisfies DefaultTheme;

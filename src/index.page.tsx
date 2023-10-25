@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
+import LoadingDots from './components/loading-dots.js';
 import {
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
@@ -33,7 +34,19 @@ import {
 } from './types.js';
 import { logError, logInfo } from './utils.js';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme) => ({
+  loading: {
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  main: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+  },
   list: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -68,7 +81,7 @@ const useStyles = createUseStyles({
     left: 0,
     flexDirection: 'column',
     padding: 8,
-    backgroundColor: '#333',
+    backgroundColor: theme.BLACK,
     zIndex: 3,
     pointerEvents: 'none',
   },
@@ -86,11 +99,12 @@ const useStyles = createUseStyles({
     left: 0,
     width: '100%',
     height: '100%',
-    border: '1px solid white',
+    border: '1px solid',
+    borderColor: theme.GRAY_LIGHTEST,
     zIndex: 1,
   },
   borderComplete: {
-    border: '1px solid yellow',
+    borderColor: theme.YELLOW,
   },
   progress: {
     position: 'absolute',
@@ -98,12 +112,19 @@ const useStyles = createUseStyles({
     right: 0,
     padding: 2,
     zIndex: 2,
-    color: 'white',
+    color: theme.WHITE,
+    fontSize: 14,
   },
   progressComplete: {
-    color: 'yellow',
+    color: theme.YELLOW,
   },
-});
+  hideSmall: {
+    display: 'none',
+    '@media all and (min-width: 768px)': {
+      display: 'initial',
+    },
+  },
+}));
 
 const Home = () => {
   const styles = useStyles();
@@ -113,6 +134,7 @@ const Home = () => {
   const { code, state: authState } = queryString.parse(location.search);
   const isClientRender = useIsClientRender();
   const [state, setState] = useStateContext();
+  const [userLoadingState, setUserLoadingState] = useState<boolean>(true);
   const [manifestLoadingState, setManifestLoadingState] = useState<
     false | TranslationKey
   >('loadingManifest');
@@ -220,11 +242,14 @@ const Home = () => {
     }
 
     const getProfile = async () => {
+      setUserLoadingState(true);
+
       const token = state.session?.token?.access_token;
       const tokenType = state.session?.token?.token_type;
       const membershipId = state.session?.token?.membership_id;
 
       if (!membershipId || !token || !tokenType) {
+        setUserLoadingState(false);
         return;
       }
 
@@ -265,6 +290,7 @@ const Home = () => {
       const firstProfile = linkedProfiles.profiles[0];
 
       if (!firstProfile) {
+        setUserLoadingState(false);
         throw new Error('No profiles found');
       }
 
@@ -302,6 +328,7 @@ const Home = () => {
           throw new Error(response.Message);
         });
 
+      setUserLoadingState(false);
       setProfile(profileResponse);
     };
 
@@ -592,13 +619,18 @@ const Home = () => {
   return (
     <>
       {shouldRenderLoading && (
-        <p>{translate(manifestLoadingState || 'loading')}...</p>
+        <main className={styles.loading}>
+          <p>
+            {translate(manifestLoadingState || 'loading')}
+            <LoadingDots />
+          </p>
+        </main>
       )}
       <noscript>
         <p>Javascript is disabled. This site requires Javascript to run.</p>
       </noscript>
       {!shouldRenderLoading && (
-        <>
+        <main>
           {state.persistent?.items && (
             <p>
               {
@@ -624,18 +656,27 @@ const Home = () => {
                   })}
                 />
 
-                {pattern.objectives && (
-                  <div
-                    className={classNames(styles.progress, {
-                      [styles.progressComplete]: pattern.complete,
-                    })}
-                  >
-                    {pattern.objectives.map((objective) => (
-                      <>
-                        {objective.progress}/{objective.completionValue}
-                      </>
-                    ))}
+                {userLoadingState ? (
+                  <div className={styles.progress}>
+                    <span className={styles.hideSmall}>
+                      {translate('loading')}
+                    </span>
+                    <LoadingDots />
                   </div>
+                ) : (
+                  pattern.objectives && (
+                    <div
+                      className={classNames(styles.progress, {
+                        [styles.progressComplete]: pattern.complete,
+                      })}
+                    >
+                      {pattern.objectives.map((objective) => (
+                        <>
+                          {objective.progress}/{objective.completionValue}
+                        </>
+                      ))}
+                    </div>
+                  )
                 )}
                 <div className={styles.listTextWrapper}>
                   <p className={styles.listTitle}>
@@ -646,7 +687,7 @@ const Home = () => {
               </li>
             ))}
           </ul>
-        </>
+        </main>
       )}
     </>
   );

@@ -1,26 +1,40 @@
 import React, { PropsWithChildren } from 'react';
-import { createUseStyles } from 'react-jss';
+import { createUseStyles, ThemeProvider } from 'react-jss';
 
+import { THEME } from './constants.js';
 import { StateProvider } from './context.js';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme) => ({
   '@global': {
     '*': {
       boxSizing: 'border-box',
     },
     'html,body': {
-      backgroundColor: '#333',
+      display: 'flex',
+      flex: 1,
+      minHeight: '100vh',
+      backgroundColor: theme.BLACK,
       fontFamily: 'arial, helvetica, sans-serif',
       fontSize: 16,
-      color: 'white',
+      color: theme.WHITE,
     },
   },
-});
+}));
 
-const Layout = ({ children }: PropsWithChildren) => {
+const GlobalStyles = ({ children }: PropsWithChildren) => {
   useStyles();
 
-  return <StateProvider>{children}</StateProvider>;
+  return children;
+};
+
+const Layout = ({ children }: PropsWithChildren) => {
+  return (
+    <ThemeProvider theme={THEME}>
+      <GlobalStyles>
+        <StateProvider>{children}</StateProvider>
+      </GlobalStyles>
+    </ThemeProvider>
+  );
 };
 
 export default Layout;
