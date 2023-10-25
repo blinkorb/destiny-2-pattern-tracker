@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
+import AuthExpired from './components/auth-expired.js';
 import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
 import Navbar from './components/navbar.js';
@@ -138,6 +139,7 @@ const Home = () => {
   const { code, state: authState } = queryString.parse(location.search);
   const isClientRender = useIsClientRender();
   const [state, setState] = useStateContext();
+  const [authExpired, setAuthExpired] = useState(false);
   const [userLoadingState, setUserLoadingState] = useState<boolean>(true);
   const [manifestLoadingState, setManifestLoadingState] = useState<
     false | TranslationKey
@@ -262,7 +264,7 @@ const Home = () => {
           }
 
           if (response.status === 401) {
-            reAuth();
+            setAuthExpired(true);
           }
 
           try {
@@ -303,7 +305,7 @@ const Home = () => {
           }
 
           if (response.status === 401) {
-            reAuth();
+            setAuthExpired(true);
           }
 
           try {
@@ -621,6 +623,7 @@ const Home = () => {
         }
         totalCount={patternsWithCompletion.length}
       />
+      {isClientRender && authExpired && <AuthExpired reAuth={reAuth} />}
       {shouldRenderLoading && (
         <main className={styles.loading}>
           <p>

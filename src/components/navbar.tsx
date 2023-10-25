@@ -65,13 +65,7 @@ const Navbar = ({
 
   const login = useCallback(() => {
     setIsLoggingInOrOut(true);
-    const timeout = globalThis.window.setTimeout(() => {
-      globalThis.requestAnimationFrame(() => reAuth());
-    }, 100);
-
-    return () => {
-      globalThis.window.clearTimeout(timeout);
-    };
+    globalThis.window.setTimeout(() => reAuth(), 100);
   }, [reAuth]);
 
   const showLoading = !isClientRender || isLoggingIn || isLoggingInOrOut;
