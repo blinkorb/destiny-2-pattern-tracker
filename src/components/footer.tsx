@@ -1,5 +1,5 @@
 import { Link } from '@blinkorb/resolute';
-import React from 'react';
+import React, { memo } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { useTranslate } from '../translations.js';
@@ -41,4 +41,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

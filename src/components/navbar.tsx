@@ -1,5 +1,5 @@
 import { useIsClientRender } from '@blinkorb/resolute';
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { useTranslate } from '../translations.js';
@@ -70,6 +70,17 @@ const Navbar = ({
     globalThis.window.setTimeout(() => reAuth(), 100);
   }, [reAuth]);
 
+  const logout = useCallback(() => {
+    setIsLoggingInOrOut(true);
+    globalThis.window.setTimeout(() => clearAuth(), 100);
+  }, [clearAuth]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setIsLoggingInOrOut(false);
+    }
+  }, [isLoggedIn]);
+
   const showLoading = !isClientRender || isLoggingIn || isLoggingInOrOut;
 
   return (
@@ -90,7 +101,7 @@ const Navbar = ({
         </span>
       )}
       {isLoggedIn && isClientRender ? (
-        <button disabled={showLoading} onClick={clearAuth}>
+        <button disabled={showLoading} onClick={logout}>
           {showLoading ? (
             <>
               {translate('loading')}
@@ -116,4 +127,4 @@ const Navbar = ({
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

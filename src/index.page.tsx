@@ -1,7 +1,13 @@
 import { useIsClientRender, useLocation, useRouter } from '@blinkorb/resolute';
 import classNames from 'classnames';
 import queryString from 'query-string';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
@@ -145,6 +151,8 @@ const Home = () => {
     false | TranslationKey
   >('loadingManifest');
   const [profile, setProfile] = useState<ProfileResponse>();
+  const hasTokenRef = useRef(!!state.session?.token);
+  hasTokenRef.current = !!state.session?.token;
 
   const reAuth = useCallback(() => {
     const nextAuthState = uuid();
@@ -166,6 +174,7 @@ const Home = () => {
       ...prev,
       session: null,
     }));
+    setProfile(undefined);
   }, [setState]);
 
   useEffect(() => {
@@ -332,7 +341,10 @@ const Home = () => {
         });
 
       setUserLoadingState(false);
-      setProfile(profileResponse);
+      if (hasTokenRef.current) {
+        // Prevent saving profile if we logged out during loading
+        setProfile(profileResponse);
+      }
     };
 
     const interval = globalThis.window

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -82,4 +82,4 @@ const LoadingDots = () => {
   );
 };
 
-export default LoadingDots;
+export default memo(LoadingDots);

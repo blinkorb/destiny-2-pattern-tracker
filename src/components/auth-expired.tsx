@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { useTranslate } from '../translations.js';
@@ -72,4 +72,4 @@ const AuthExpired = ({ reAuth }: { reAuth: () => void }) => {
   );
 };
 
-export default AuthExpired;
+export default memo(AuthExpired);
