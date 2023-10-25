@@ -146,5 +146,6 @@ export const THEME = {
   BACKGROUND: '#222',
   TEXT: '#fff',
   BORDER: '#ddd',
-  HIGHLIGHT: '#eade8b',
+  HIGHLIGHT: '#8ddd87',
+  BRAND: '#ff2c68',
 } satisfies DefaultTheme;

@@ -24,7 +24,7 @@ const useStyles = createUseStyles((theme) => ({
       overflowX: 'hidden',
     },
     a: {
-      color: theme.HIGHLIGHT,
+      color: theme.BRAND,
       textDecoration: 'underline',
     },
     button: {
@@ -32,7 +32,7 @@ const useStyles = createUseStyles((theme) => ({
       flex: 0,
       border: 'none',
       borderRadius: 2,
-      backgroundColor: theme.HIGHLIGHT,
+      backgroundColor: theme.BRAND,
       color: theme.BACKGROUND,
       fontSize: 16,
       padding: '4px 12px',

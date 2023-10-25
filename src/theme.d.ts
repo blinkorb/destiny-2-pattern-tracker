@@ -5,6 +5,7 @@ declare global {
       TEXT: string;
       BORDER: string;
       HIGHLIGHT: string;
+      BRAND: string;
     }
   }
 }

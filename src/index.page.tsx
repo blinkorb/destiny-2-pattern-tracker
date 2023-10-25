@@ -80,20 +80,25 @@ const useStyles = createUseStyles((theme) => ({
   },
   listItem: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     position: 'relative',
-    padding: 0,
+    padding: 1,
     margin: 0,
+    backgroundColor: theme.BORDER,
     '&:hover $listTextWrapper': {
       display: 'flex',
     },
+  },
+  listItemComplete: {
+    backgroundColor: theme.HIGHLIGHT,
   },
   listIcon: {
     width: 48,
     height: 48,
     '@media all and (min-width: 768px)': {
-      width: 72,
-      height: 72,
+      width: 56,
+      height: 56,
     },
   },
   listTextWrapper: {
@@ -116,30 +121,13 @@ const useStyles = createUseStyles((theme) => ({
     fontSize: 12,
     margin: 0,
   },
-  border: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    border: '1px solid',
-    borderColor: theme.BORDER,
-    zIndex: 1,
-  },
   borderComplete: {
     borderColor: theme.HIGHLIGHT,
   },
   progress: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
     padding: 2,
-    zIndex: 2,
-    color: theme.TEXT,
-    fontSize: 14,
-  },
-  progressComplete: {
-    color: theme.HIGHLIGHT,
+    color: theme.BACKGROUND,
+    fontSize: 12,
   },
   hideSmall: {
     display: 'none',
@@ -674,7 +662,12 @@ const Home = () => {
           )}
           <ul className={styles.list}>
             {patternsWithCompletion.map((pattern) => (
-              <li key={pattern.hash} className={styles.listItem}>
+              <li
+                key={pattern.hash}
+                className={classNames(styles.listItem, {
+                  [styles.listItemComplete]: pattern.complete,
+                })}
+              >
                 {pattern.displayProperties.hasIcon && (
                   <img
                     className={styles.listIcon}
@@ -682,26 +675,13 @@ const Home = () => {
                   />
                 )}
 
-                <div
-                  className={classNames(styles.border, {
-                    [styles.borderComplete]: pattern.complete,
-                  })}
-                />
-
                 {userLoadingState ? (
                   <div className={styles.progress}>
-                    <span className={styles.hideSmall}>
-                      {translate('loading')}
-                    </span>
                     <LoadingDots />
                   </div>
                 ) : (
                   pattern.objectives && (
-                    <div
-                      className={classNames(styles.progress, {
-                        [styles.progressComplete]: pattern.complete,
-                      })}
-                    >
+                    <div className={styles.progress}>
                       {pattern.objectives.map((objective) => (
                         <>
                           {objective.progress}/{objective.completionValue}
