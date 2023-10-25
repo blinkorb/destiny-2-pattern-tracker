@@ -1,0 +1,60 @@
+{
+  "name": "destiny-2-pattern-tracker",
+  "version": "0.0.0",
+  "description": "Destiny 2 Weapon Pattern Tracker",
+  "main": "src/index.tsx",
+  "type": "module",
+  "scripts": {
+    "dev": "resolute dev --https",
+    "build": "resolute build",
+    "typecheck": "tsc --noEmit",
+    "format-check": "prettier --check '**/*'",
+    "format": "prettier --write '**/*'",
+    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
+    "tests": "jest --coverage --runInBand --passWithNoTests",
+    "test": "npm run typecheck && npm run format-check && npm run lint && npm run tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinkorb/destiny-2-pattern-tracker.git"
+  },
+  "keywords": [
+    "destiny",
+    "destiny2",
+    "pattern",
+    "tracker",
+    "weapon"
+  ],
+  "author": "BlinkOrb Ltd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blinkorb/destiny-2-pattern-tracker/issues"
+  },
+  "homepage": "https://github.com/blinkorb/destiny-2-pattern-tracker#readme",
+  "dependencies": {
+    "@blinkorb/resolute": "^0.0.1",
+    "@types/react": "^18.2.28",
+    "@types/react-dom": "^18.2.13",
+    "@types/uuid": "^9.0.5",
+    "classnames": "^2.3.2",
+    "query-string": "^8.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-jss": "^10.10.0",
+    "typescript": "^5.2.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1"
+  }
+}

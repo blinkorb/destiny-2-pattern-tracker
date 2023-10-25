@@ -1,0 +1,12 @@
+/node_modules/*
+/coverage/*
+/build/*
+/dist/*
+/static/*
+/server/*
+/.vscode/*
+
+.DS_Store
+npm-debug.log*
+*.pem
+.env
