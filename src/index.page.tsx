@@ -16,6 +16,7 @@ import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
 import Navbar, { NAVBAR_HEIGHT } from './components/navbar.js';
 import {
+  GROUPED_PATTERNS,
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
   ROOT_PRESENTATION_NODE_HASH,
@@ -628,6 +629,12 @@ const Home = () => {
       .filter((item): item is Exclude<typeof item, null> => !!item);
   }, [patternRecordMap, patterns, profile?.profileRecords.data.records]);
 
+  const ungroupedPatternsWithCompletion = useMemo(() => {
+    return patternsWithCompletion.filter(
+      (pattern) => !GROUPED_PATTERNS.includes(pattern.hash)
+    );
+  }, [patternsWithCompletion]);
+
   const shouldRenderLoading =
     !isClientRender || !state.dbInitialized || manifestLoadingState !== false;
 
@@ -661,7 +668,7 @@ const Home = () => {
             <p className={styles.intro}>{translate('intro')}</p>
           )}
           <ul className={styles.list}>
-            {patternsWithCompletion.map((pattern) => (
+            {ungroupedPatternsWithCompletion.map((pattern) => (
               <li
                 key={pattern.hash}
                 className={classNames(styles.listItem, {
