@@ -44,84 +44,96 @@ export const WEAPON_GROUPINGS: WeaponGroupings = [
   // Seasons
   {
     key: 'seasonOfTheWitch',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'seasonOfTheDeep',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'seasonOfDefiance',
-    groups: [[], []],
+    groups: [
+      { key: 'standard', items: [] },
+      { key: 'secondary', items: [] },
+    ],
   },
   {
     key: 'seasonOfTheSeraph',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'seasonOfPlunder',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'seasonOfTheHaunted',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'seasonOfTheRisen',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   // Raids
   {
     key: 'crotasEnd',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'rootOfNightmares',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'kingsFall',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'vowOfTheDisciple',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'vaultOfGlass',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'deepStoneCrypt',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'gardenOfSalvation',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   {
     key: 'lastWish',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
   // Misc
   {
     key: 'wellSpring',
-    groups: [[], []],
+    groups: [
+      { key: 'standard', items: [] },
+      { key: 'exotic', items: [] },
+    ],
   },
   {
     key: 'evidenceBoard',
-    groups: [[], []],
+    groups: [
+      { key: 'standard', items: [] },
+      { key: 'exotic', items: [] },
+    ],
   },
   {
     key: 'daresOfEternity',
-    groups: [[]],
+    groups: [{ key: 'standard', items: [] }],
   },
 ];
 
 export const GROUPED_PATTERNS = WEAPON_GROUPINGS.reduce<readonly number[]>(
   (acc, grouping) => {
     return grouping.groups.reduce<readonly number[]>(
-      (acc2, group) => [...acc2, ...group.map((item) => item.patternHash)],
+      (acc2, group) => [
+        ...acc2,
+        ...group.items.map((item) => item.patternHash),
+      ],
       acc
     );
   },
