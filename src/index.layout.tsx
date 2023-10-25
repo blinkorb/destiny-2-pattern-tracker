@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { Helmet } from 'react-helmet';
 import { createUseStyles, ThemeProvider } from 'react-jss';
 
 import { THEME } from './constants.js';
@@ -53,6 +54,9 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <ThemeProvider theme={THEME}>
       <GlobalStyles>
+        <Helmet>
+          <link rel="shortcut icon" href="/images/favicon.ico" />
+        </Helmet>
         <StateProvider>{children}</StateProvider>
       </GlobalStyles>
     </ThemeProvider>

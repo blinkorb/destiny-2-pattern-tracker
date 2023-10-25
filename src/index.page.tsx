@@ -14,7 +14,7 @@ import { v4 as uuid } from 'uuid';
 import AuthExpired from './components/auth-expired.js';
 import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
-import Navbar from './components/navbar.js';
+import Navbar, { NAVBAR_HEIGHT } from './components/navbar.js';
 import {
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
@@ -43,6 +43,10 @@ import {
 } from './types.js';
 import { logError, logInfo } from './utils.js';
 
+export const title = 'Destiny 2 Pattern Tracker';
+export const description =
+  'Track your Destiny 2 craftable weapons & pattern progress';
+
 const useStyles = createUseStyles((theme) => ({
   loading: {
     display: 'flex',
@@ -50,13 +54,13 @@ const useStyles = createUseStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    paddingTop: 48,
+    paddingTop: NAVBAR_HEIGHT,
   },
   main: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 48,
+    paddingTop: NAVBAR_HEIGHT,
   },
   list: {
     display: 'flex',
