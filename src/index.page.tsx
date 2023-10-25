@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
+import LoadingDots from './components/loading-dots.js';
 import {
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
@@ -592,7 +593,10 @@ const Home = () => {
   return (
     <>
       {shouldRenderLoading && (
-        <p>{translate(manifestLoadingState || 'loading')}...</p>
+        <p>
+          {translate(manifestLoadingState || 'loading')}
+          <LoadingDots />
+        </p>
       )}
       <noscript>
         <p>Javascript is disabled. This site requires Javascript to run.</p>
