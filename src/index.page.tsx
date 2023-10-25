@@ -54,7 +54,7 @@ const useStyles = createUseStyles((theme) => ({
     marginTop: 12,
     textAlign: 'center',
     fontStyle: 'italic',
-    color: theme.GRAY_LIGHTEST,
+    color: theme.BORDER,
   },
   loading: {
     display: 'flex',
@@ -104,7 +104,7 @@ const useStyles = createUseStyles((theme) => ({
     left: 0,
     flexDirection: 'column',
     padding: 8,
-    backgroundColor: theme.BLACK,
+    backgroundColor: theme.BACKGROUND,
     zIndex: 3,
     pointerEvents: 'none',
   },
@@ -123,11 +123,11 @@ const useStyles = createUseStyles((theme) => ({
     width: '100%',
     height: '100%',
     border: '1px solid',
-    borderColor: theme.GRAY_LIGHTEST,
+    borderColor: theme.BORDER,
     zIndex: 1,
   },
   borderComplete: {
-    borderColor: theme.YELLOW,
+    borderColor: theme.HIGHLIGHT,
   },
   progress: {
     position: 'absolute',
@@ -135,11 +135,11 @@ const useStyles = createUseStyles((theme) => ({
     right: 0,
     padding: 2,
     zIndex: 2,
-    color: theme.WHITE,
+    color: theme.TEXT,
     fontSize: 14,
   },
   progressComplete: {
-    color: theme.YELLOW,
+    color: theme.HIGHLIGHT,
   },
   hideSmall: {
     display: 'none',

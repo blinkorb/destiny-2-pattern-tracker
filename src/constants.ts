@@ -143,8 +143,8 @@ export const GROUPED_PATTERNS = WEAPON_GROUPINGS.reduce<readonly number[]>(
 export const ROOT_PRESENTATION_NODE_HASH = 2642502414;
 
 export const THEME = {
-  BLACK: '#222',
-  WHITE: '#fff',
-  GRAY_LIGHTEST: '#ddd',
-  YELLOW: '#eade8b',
+  BACKGROUND: '#222',
+  TEXT: '#fff',
+  BORDER: '#ddd',
+  HIGHLIGHT: '#eade8b',
 } satisfies DefaultTheme;
