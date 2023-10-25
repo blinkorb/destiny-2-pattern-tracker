@@ -34,7 +34,7 @@ const useStyles = createUseStyles((theme) => ({
     width: 18,
     height: 18,
   },
-  h1: {
+  title: {
     fontSize: 18,
     margin: 0,
     padding: 0,
@@ -102,7 +102,7 @@ const Navbar = ({
       <div className={styles.logoAndTitleWrapper}>
         <img src="/images/icon-64x64.png" className={styles.logo} />
         <h1
-          className={styles.h1}
+          className={styles.title}
           title={translate('destiny2PatternTracker')}
           aria-label={translate('destiny2PatternTracker')}
         >

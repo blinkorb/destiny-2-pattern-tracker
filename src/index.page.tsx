@@ -1,5 +1,4 @@
 import { useIsClientRender, useLocation, useRouter } from '@blinkorb/resolute';
-import classNames from 'classnames';
 import queryString from 'query-string';
 import React, {
   useCallback,
@@ -15,8 +14,10 @@ import AuthExpired from './components/auth-expired.js';
 import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
 import Navbar, { NAVBAR_HEIGHT } from './components/navbar.js';
+import Pattern from './components/pattern.js';
 import {
   GROUPED_PATTERNS,
+  GROUPINGS,
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
   ROOT_PRESENTATION_NODE_HASH,
@@ -79,62 +80,51 @@ const useStyles = createUseStyles((theme) => ({
     margin: 0,
     gap: 8,
   },
-  listItem: {
+  groupList: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    position: 'relative',
-    padding: 1,
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 12,
     margin: 0,
-    backgroundColor: theme.BORDER,
-    '&:hover $listTextWrapper': {
-      display: 'flex',
-    },
+    gap: 8,
   },
-  listItemComplete: {
-    backgroundColor: theme.HIGHLIGHT,
-  },
-  listIcon: {
-    width: 48,
-    height: 48,
-    '@media all and (min-width: 768px)': {
-      width: 56,
-      height: 56,
-    },
-  },
-  listTextWrapper: {
-    display: 'none',
-    position: 'absolute',
-    width: 200,
-    top: '100%',
-    left: 0,
-    flexDirection: 'column',
+  group: {
     padding: 8,
-    backgroundColor: theme.BACKGROUND,
-    zIndex: 3,
-    pointerEvents: 'none',
+    margin: 0,
+    border: '1px solid',
+    borderColor: theme.BORDER_FAINT,
   },
-  listTitle: {
+  groupTitle: {
     fontSize: 16,
+    padding: 0,
+    margin: 0,
+    marginBottom: 8,
+  },
+  subGroupList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    gap: 16,
+  },
+  subGroup: {
+    padding: 0,
     margin: 0,
   },
-  listFlavor: {
-    fontSize: 12,
+  subGroupItemList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 0,
     margin: 0,
+    gap: 8,
   },
-  borderComplete: {
-    borderColor: theme.HIGHLIGHT,
-  },
-  progress: {
-    padding: 2,
-    color: theme.BACKGROUND,
-    fontSize: 12,
-  },
-  hideSmall: {
-    display: 'none',
-    '@media all and (min-width: 768px)': {
-      display: 'initial',
-    },
+  ungroupedTitle: {
+    margin: 0,
+    padding: 12,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 }));
 
@@ -635,6 +625,33 @@ const Home = () => {
     );
   }, [patternsWithCompletion]);
 
+  const groupsWithCompletion = useMemo(() => {
+    if (!isClientRender || !patternsWithCompletion.length) {
+      return [];
+    }
+
+    return GROUPINGS.map((group) => ({
+      ...group,
+      groups: group.groups.map((subGroup) => ({
+        ...subGroup,
+        items: subGroup.items.map((item) => {
+          const patternWithCompletion = patternsWithCompletion.find(
+            (pattern) => pattern.hash === item.patternHash
+          );
+
+          if (!patternWithCompletion) {
+            logInfo(`Could not find pattern for hash "${item.patternHash}"`);
+          }
+
+          return {
+            ...item,
+            patternWithCompletion,
+          };
+        }),
+      })),
+    }));
+  }, [isClientRender, patternsWithCompletion]);
+
   const shouldRenderLoading =
     !isClientRender || !state.dbInitialized || manifestLoadingState !== false;
 
@@ -667,43 +684,46 @@ const Home = () => {
           {!state.session?.token && (
             <p className={styles.intro}>{translate('intro')}</p>
           )}
+          <ul className={styles.groupList}>
+            {groupsWithCompletion.map((group) => (
+              <li key={group.key} className={styles.group}>
+                <h1 className={styles.groupTitle}>{translate(group.key)}</h1>
+                <ul className={styles.subGroupList}>
+                  {group.groups.map((subGroup) => (
+                    <li key={subGroup.key} className={styles.subGroup}>
+                      <ul className={styles.subGroupItemList}>
+                        {subGroup.items
+                          .map((item) => item.patternWithCompletion)
+                          .filter(
+                            (
+                              pattern
+                            ): pattern is Exclude<typeof pattern, undefined> =>
+                              !!pattern
+                          )
+                          .map((pattern) => (
+                            <Pattern
+                              key={pattern.hash}
+                              userLoadingState={userLoadingState}
+                              pattern={pattern}
+                            />
+                          ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <p className={styles.ungroupedTitle}>
+            {translate('ungroupedWorldDrop')}
+          </p>
           <ul className={styles.list}>
             {ungroupedPatternsWithCompletion.map((pattern) => (
-              <li
+              <Pattern
                 key={pattern.hash}
-                className={classNames(styles.listItem, {
-                  [styles.listItemComplete]: pattern.complete,
-                })}
-              >
-                {pattern.displayProperties.hasIcon && (
-                  <img
-                    className={styles.listIcon}
-                    src={`${process.env.CLIENT_API_URL}${pattern.displayProperties.icon}`}
-                  />
-                )}
-
-                {userLoadingState ? (
-                  <div className={styles.progress}>
-                    <LoadingDots />
-                  </div>
-                ) : (
-                  pattern.objectives && (
-                    <div className={styles.progress}>
-                      {pattern.objectives.map((objective) => (
-                        <>
-                          {objective.progress}/{objective.completionValue}
-                        </>
-                      ))}
-                    </div>
-                  )
-                )}
-                <div className={styles.listTextWrapper}>
-                  <p className={styles.listTitle}>
-                    {pattern.displayProperties.name}
-                  </p>
-                  <p className={styles.listFlavor}>{pattern.flavorText}</p>
-                </div>
-              </li>
+                userLoadingState={userLoadingState}
+                pattern={pattern}
+              />
             ))}
           </ul>
         </main>
