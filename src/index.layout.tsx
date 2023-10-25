@@ -20,6 +20,7 @@ const useStyles = createUseStyles((theme) => ({
       color: theme.WHITE,
       padding: 0,
       margin: 0,
+      overflowX: 'hidden',
     },
     a: {
       color: theme.YELLOW,
