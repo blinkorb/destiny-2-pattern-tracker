@@ -1,11 +1,20 @@
 import { useIsClientRender, useLocation, useRouter } from '@blinkorb/resolute';
 import classNames from 'classnames';
 import queryString from 'query-string';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
+import AuthExpired from './components/auth-expired.js';
+import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
+import Navbar from './components/navbar.js';
 import {
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
@@ -41,17 +50,19 @@ const useStyles = createUseStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    paddingTop: 48,
   },
   main: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
+    paddingTop: 48,
   },
   list: {
     display: 'flex',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: 0,
+    padding: 12,
     margin: 0,
     gap: 8,
   },
@@ -134,11 +145,14 @@ const Home = () => {
   const { code, state: authState } = queryString.parse(location.search);
   const isClientRender = useIsClientRender();
   const [state, setState] = useStateContext();
+  const [authExpired, setAuthExpired] = useState(false);
   const [userLoadingState, setUserLoadingState] = useState<boolean>(true);
   const [manifestLoadingState, setManifestLoadingState] = useState<
     false | TranslationKey
   >('loadingManifest');
   const [profile, setProfile] = useState<ProfileResponse>();
+  const hasTokenRef = useRef(!!state.session?.token);
+  hasTokenRef.current = !!state.session?.token;
 
   const reAuth = useCallback(() => {
     const nextAuthState = uuid();
@@ -155,15 +169,13 @@ const Home = () => {
     globalThis.location.href = `${process.env.CLIENT_API_URL}/${state.language}/OAuth/Authorize?client_id=${process.env.CLIENT_ID}&response_type=code&state=${nextAuthState}`;
   }, [setState, state.language]);
 
-  useEffect(() => {
-    if (!isClientRender) {
-      return;
-    }
-
-    if (!state.session?.token && !code) {
-      reAuth();
-    }
-  }, [code, isClientRender, reAuth, state.session?.token]);
+  const clearAuth = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      session: null,
+    }));
+    setProfile(undefined);
+  }, [setState]);
 
   useEffect(() => {
     if (!isClientRender) {
@@ -268,7 +280,7 @@ const Home = () => {
           }
 
           if (response.status === 401) {
-            reAuth();
+            setAuthExpired(true);
           }
 
           try {
@@ -309,7 +321,7 @@ const Home = () => {
           }
 
           if (response.status === 401) {
-            reAuth();
+            setAuthExpired(true);
           }
 
           try {
@@ -329,7 +341,10 @@ const Home = () => {
         });
 
       setUserLoadingState(false);
-      setProfile(profileResponse);
+      if (hasTokenRef.current) {
+        // Prevent saving profile if we logged out during loading
+        setProfile(profileResponse);
+      }
     };
 
     const interval = globalThis.window
@@ -618,28 +633,30 @@ const Home = () => {
 
   return (
     <>
+      <Navbar
+        reAuth={reAuth}
+        clearAuth={clearAuth}
+        isLoggedIn={!!state.session?.token}
+        isLoggingIn={!!code}
+        acquiredCount={
+          patternsWithCompletion.filter((pattern) => pattern.complete).length
+        }
+        totalCount={patternsWithCompletion.length}
+      />
+      {isClientRender && authExpired && <AuthExpired reAuth={reAuth} />}
       {shouldRenderLoading && (
         <main className={styles.loading}>
           <p>
             {translate(manifestLoadingState || 'loading')}
             <LoadingDots />
           </p>
+          <noscript>
+            <p>Javascript is disabled. This site requires Javascript to run.</p>
+          </noscript>
         </main>
       )}
-      <noscript>
-        <p>Javascript is disabled. This site requires Javascript to run.</p>
-      </noscript>
       {!shouldRenderLoading && (
-        <main>
-          {state.persistent?.items && (
-            <p>
-              {
-                patternsWithCompletion.filter((pattern) => pattern.complete)
-                  .length
-              }
-              /{patternsWithCompletion.length}
-            </p>
-          )}
+        <main className={styles.main}>
           <ul className={styles.list}>
             {patternsWithCompletion.map((pattern) => (
               <li key={pattern.hash} className={styles.listItem}>
@@ -689,6 +706,7 @@ const Home = () => {
           </ul>
         </main>
       )}
+      <Footer />
     </>
   );
 };
