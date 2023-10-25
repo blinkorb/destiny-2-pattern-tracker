@@ -663,7 +663,7 @@ const Home = () => {
             <LoadingDots />
           </p>
           <noscript>
-            <p>Javascript is disabled. This site requires Javascript to run.</p>
+            <p>{translate('javascriptDisabled')}</p>
           </noscript>
         </main>
       )}
