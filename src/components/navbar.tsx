@@ -1,8 +1,9 @@
 import { useIsClientRender } from '@blinkorb/resolute';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { useTranslate } from '../translations.js';
+import LoadingDots from './loading-dots.js';
 
 const useStyles = createUseStyles((theme) => ({
   header: {
@@ -48,16 +49,32 @@ const Navbar = ({
   acquiredCount,
   totalCount,
   isLoggedIn,
+  isLoggingIn,
   reAuth,
 }: {
   acquiredCount: number;
   totalCount: number;
   isLoggedIn: boolean;
+  isLoggingIn: boolean;
   reAuth: () => void;
 }) => {
+  const [isLoggingInOrOut, setIsLoggingInOrOut] = useState(false);
   const isClientRender = useIsClientRender();
   const translate = useTranslate();
   const styles = useStyles();
+
+  const login = useCallback(() => {
+    setIsLoggingInOrOut(true);
+    const timeout = globalThis.window.setTimeout(() => {
+      globalThis.requestAnimationFrame(() => reAuth());
+    }, 100);
+
+    return () => {
+      globalThis.window.clearTimeout(timeout);
+    };
+  }, [reAuth]);
+
+  const showLoading = !isClientRender || isLoggingIn || isLoggingInOrOut;
 
   return (
     <header className={styles.header}>
@@ -77,10 +94,26 @@ const Navbar = ({
         </span>
       )}
       {isLoggedIn && isClientRender ? (
-        <button disabled={!isClientRender}>{translate('logout')}</button>
+        <button disabled={showLoading}>
+          {showLoading ? (
+            <>
+              {translate('loading')}
+              <LoadingDots />
+            </>
+          ) : (
+            translate('logout')
+          )}
+        </button>
       ) : (
-        <button disabled={!isClientRender} onClick={reAuth}>
-          {translate('login')}
+        <button disabled={showLoading} onClick={login}>
+          {showLoading ? (
+            <>
+              {translate('loading')}
+              <LoadingDots />
+            </>
+          ) : (
+            translate('login')
+          )}
         </button>
       )}
     </header>

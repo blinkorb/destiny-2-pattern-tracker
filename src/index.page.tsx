@@ -164,16 +164,6 @@ const Home = () => {
       return;
     }
 
-    if (!state.session?.token && !code) {
-      reAuth();
-    }
-  }, [code, isClientRender, reAuth, state.session?.token]);
-
-  useEffect(() => {
-    if (!isClientRender) {
-      return;
-    }
-
     if (
       typeof code === 'string' &&
       typeof authState === 'string' &&
@@ -625,6 +615,7 @@ const Home = () => {
       <Navbar
         reAuth={reAuth}
         isLoggedIn={!!state.session?.token}
+        isLoggingIn={!!code}
         acquiredCount={
           patternsWithCompletion.filter((pattern) => pattern.complete).length
         }
