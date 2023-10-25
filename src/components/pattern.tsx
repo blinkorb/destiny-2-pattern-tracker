@@ -62,9 +62,11 @@ const useStyles = createUseStyles((theme) => ({
 const Pattern = ({
   pattern,
   userLoadingState,
+  hasProfile,
 }: {
   pattern: PatternWithCompletion;
   userLoadingState: boolean;
+  hasProfile: boolean;
 }) => {
   const styles = useStyles();
 
@@ -82,7 +84,7 @@ const Pattern = ({
         />
       )}
 
-      {userLoadingState ? (
+      {!hasProfile && userLoadingState ? (
         <div className={styles.progress}>
           <LoadingDots />
         </div>

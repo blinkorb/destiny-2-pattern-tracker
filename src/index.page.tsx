@@ -704,6 +704,7 @@ const Home = () => {
                             <Pattern
                               key={pattern.hash}
                               userLoadingState={userLoadingState}
+                              hasProfile={!!profile}
                               pattern={pattern}
                             />
                           ))}
@@ -722,6 +723,7 @@ const Home = () => {
               <Pattern
                 key={pattern.hash}
                 userLoadingState={userLoadingState}
+                hasProfile={!!profile}
                 pattern={pattern}
               />
             ))}
