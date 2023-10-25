@@ -48,6 +48,14 @@ export const description =
   'Track your Destiny 2 craftable weapons & pattern progress';
 
 const useStyles = createUseStyles((theme) => ({
+  intro: {
+    margin: 0,
+    padding: 12,
+    marginTop: 12,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    color: theme.GRAY_LIGHTEST,
+  },
   loading: {
     display: 'flex',
     flex: 1,
@@ -655,12 +663,15 @@ const Home = () => {
             <LoadingDots />
           </p>
           <noscript>
-            <p>Javascript is disabled. This site requires Javascript to run.</p>
+            <p>{translate('javascriptDisabled')}</p>
           </noscript>
         </main>
       )}
       {!shouldRenderLoading && (
         <main className={styles.main}>
+          {!state.session?.token && (
+            <p className={styles.intro}>{translate('intro')}</p>
+          )}
           <ul className={styles.list}>
             {patternsWithCompletion.map((pattern) => (
               <li key={pattern.hash} className={styles.listItem}>

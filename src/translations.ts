@@ -9,6 +9,10 @@ const TRANSLATIONS = {
   en: {
     d2pt: 'D2PT',
     destiny2PatternTracker: 'Destiny 2 Pattern Tracker',
+    intro:
+      'Track your Destiny 2 craftable weapons & pattern progress across seasons, raids, and other activities. Login to get started.',
+    javascriptDisabled:
+      'Javascript is disabled. This site requires Javascript to run.',
     byBlinkOrb: 'Made by BlinkOrb',
     contribute: 'Contribute on GitHub',
     onGitHub: 'Destiny 2 Pattern Tracker on GitHub',
