@@ -24,7 +24,7 @@ const useStyles = createUseStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 12,
-    backgroundColor: theme.BLACK,
+    backgroundColor: theme.BACKGROUND,
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.5)',
     borderRadius: 2,
   },

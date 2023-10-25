@@ -32,9 +32,12 @@ const TRANSLATIONS = {
     seasonOfPlunder: 'Season of Plunder',
     seasonOfTheHaunted: 'Season of the Haunted',
     seasonOfTheRisen: 'Season of the Risen',
+    lightfall: 'Lightfall',
+    theWitchQueen: 'The Witch Queen',
+    duality: 'Duality',
     crotasEnd: "Crota's End",
     rootOfNightmares: 'Root of Nightmares',
-    kingsFall: 'Kings Fall',
+    kingsFall: "King's Fall",
     vowOfTheDisciple: 'Vow of the Disciple',
     vaultOfGlass: 'Vault of Glass',
     deepStoneCrypt: 'Deep Stone Crypt',
@@ -43,6 +46,9 @@ const TRANSLATIONS = {
     wellSpring: 'Well Spring',
     evidenceBoard: 'Evidence Board',
     daresOfEternity: 'Dares of Eternity',
+    exotic: 'Exotic',
+    quest: 'Quest',
+    ungroupedWorldDrop: 'Ungrouped / World Drop',
   },
 } satisfies Partial<Record<SupportedLanguage, Partial<Record<string, string>>>>;
 

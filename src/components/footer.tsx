@@ -12,7 +12,7 @@ const useStyles = createUseStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 12,
-    backgroundColor: theme.BLACK,
+    backgroundColor: theme.BACKGROUND,
     fontSize: 14,
   },
   p: {

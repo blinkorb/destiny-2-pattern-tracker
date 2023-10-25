@@ -422,12 +422,17 @@ export interface PatternWithCompletion extends DestinyItem {
   objectives?: readonly ProfileRecordObjective[];
 }
 
-export interface WeaponGroup {
-  key: TranslationKey;
-  groups: readonly (readonly {
+export interface WeaponSubGroup {
+  key: string;
+  items: readonly {
     patternHash: number;
     patternWithCompletion?: PatternWithCompletion;
-  }[])[];
+  }[];
+}
+
+export interface WeaponGroup {
+  key: TranslationKey;
+  groups: readonly WeaponSubGroup[];
 }
 
 export type WeaponGroupings = readonly WeaponGroup[];

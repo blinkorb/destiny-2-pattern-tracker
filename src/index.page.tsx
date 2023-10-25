@@ -1,5 +1,4 @@
 import { useIsClientRender, useLocation, useRouter } from '@blinkorb/resolute';
-import classNames from 'classnames';
 import queryString from 'query-string';
 import React, {
   useCallback,
@@ -15,7 +14,10 @@ import AuthExpired from './components/auth-expired.js';
 import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
 import Navbar, { NAVBAR_HEIGHT } from './components/navbar.js';
+import Pattern from './components/pattern.js';
 import {
+  GROUPED_PATTERNS,
+  GROUPINGS,
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
   ROOT_PRESENTATION_NODE_HASH,
@@ -54,7 +56,7 @@ const useStyles = createUseStyles((theme) => ({
     marginTop: 12,
     textAlign: 'center',
     fontStyle: 'italic',
-    color: theme.GRAY_LIGHTEST,
+    color: theme.BORDER,
   },
   loading: {
     display: 'flex',
@@ -78,74 +80,51 @@ const useStyles = createUseStyles((theme) => ({
     margin: 0,
     gap: 8,
   },
-  listItem: {
+  groupList: {
     display: 'flex',
-    alignItems: 'center',
-    position: 'relative',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 12,
+    margin: 0,
+    gap: 8,
+  },
+  group: {
+    padding: 8,
+    margin: 0,
+    border: '1px solid',
+    borderColor: theme.BORDER_FAINT,
+  },
+  groupTitle: {
+    fontSize: 16,
     padding: 0,
     margin: 0,
-    '&:hover $listTextWrapper': {
-      display: 'flex',
-    },
+    marginBottom: 8,
   },
-  listIcon: {
-    width: 48,
-    height: 48,
-    '@media all and (min-width: 768px)': {
-      width: 72,
-      height: 72,
-    },
+  subGroupList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    gap: 16,
   },
-  listTextWrapper: {
-    display: 'none',
-    position: 'absolute',
-    width: 200,
-    top: '100%',
-    left: 0,
-    flexDirection: 'column',
-    padding: 8,
-    backgroundColor: theme.BLACK,
-    zIndex: 3,
-    pointerEvents: 'none',
+  subGroup: {
+    padding: 0,
+    margin: 0,
   },
-  listTitle: {
+  subGroupItemList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    gap: 8,
+  },
+  ungroupedTitle: {
+    margin: 0,
+    padding: 12,
     fontSize: 16,
-    margin: 0,
-  },
-  listFlavor: {
-    fontSize: 12,
-    margin: 0,
-  },
-  border: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    border: '1px solid',
-    borderColor: theme.GRAY_LIGHTEST,
-    zIndex: 1,
-  },
-  borderComplete: {
-    borderColor: theme.YELLOW,
-  },
-  progress: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    padding: 2,
-    zIndex: 2,
-    color: theme.WHITE,
-    fontSize: 14,
-  },
-  progressComplete: {
-    color: theme.YELLOW,
-  },
-  hideSmall: {
-    display: 'none',
-    '@media all and (min-width: 768px)': {
-      display: 'initial',
-    },
+    fontWeight: 'bold',
   },
 }));
 
@@ -640,6 +619,39 @@ const Home = () => {
       .filter((item): item is Exclude<typeof item, null> => !!item);
   }, [patternRecordMap, patterns, profile?.profileRecords.data.records]);
 
+  const ungroupedPatternsWithCompletion = useMemo(() => {
+    return patternsWithCompletion.filter(
+      (pattern) => !GROUPED_PATTERNS.includes(pattern.hash)
+    );
+  }, [patternsWithCompletion]);
+
+  const groupsWithCompletion = useMemo(() => {
+    if (!isClientRender || !patternsWithCompletion.length) {
+      return [];
+    }
+
+    return GROUPINGS.map((group) => ({
+      ...group,
+      groups: group.groups.map((subGroup) => ({
+        ...subGroup,
+        items: subGroup.items.map((item) => {
+          const patternWithCompletion = patternsWithCompletion.find(
+            (pattern) => pattern.hash === item.patternHash
+          );
+
+          if (!patternWithCompletion) {
+            logInfo(`Could not find pattern for hash "${item.patternHash}"`);
+          }
+
+          return {
+            ...item,
+            patternWithCompletion,
+          };
+        }),
+      })),
+    }));
+  }, [isClientRender, patternsWithCompletion]);
+
   const shouldRenderLoading =
     !isClientRender || !state.dbInitialized || manifestLoadingState !== false;
 
@@ -672,51 +684,46 @@ const Home = () => {
           {!state.session?.token && (
             <p className={styles.intro}>{translate('intro')}</p>
           )}
-          <ul className={styles.list}>
-            {patternsWithCompletion.map((pattern) => (
-              <li key={pattern.hash} className={styles.listItem}>
-                {pattern.displayProperties.hasIcon && (
-                  <img
-                    className={styles.listIcon}
-                    src={`${process.env.CLIENT_API_URL}${pattern.displayProperties.icon}`}
-                  />
-                )}
-
-                <div
-                  className={classNames(styles.border, {
-                    [styles.borderComplete]: pattern.complete,
-                  })}
-                />
-
-                {userLoadingState ? (
-                  <div className={styles.progress}>
-                    <span className={styles.hideSmall}>
-                      {translate('loading')}
-                    </span>
-                    <LoadingDots />
-                  </div>
-                ) : (
-                  pattern.objectives && (
-                    <div
-                      className={classNames(styles.progress, {
-                        [styles.progressComplete]: pattern.complete,
-                      })}
-                    >
-                      {pattern.objectives.map((objective) => (
-                        <>
-                          {objective.progress}/{objective.completionValue}
-                        </>
-                      ))}
-                    </div>
-                  )
-                )}
-                <div className={styles.listTextWrapper}>
-                  <p className={styles.listTitle}>
-                    {pattern.displayProperties.name}
-                  </p>
-                  <p className={styles.listFlavor}>{pattern.flavorText}</p>
-                </div>
+          <ul className={styles.groupList}>
+            {groupsWithCompletion.map((group) => (
+              <li key={group.key} className={styles.group}>
+                <h1 className={styles.groupTitle}>{translate(group.key)}</h1>
+                <ul className={styles.subGroupList}>
+                  {group.groups.map((subGroup) => (
+                    <li key={subGroup.key} className={styles.subGroup}>
+                      <ul className={styles.subGroupItemList}>
+                        {subGroup.items
+                          .map((item) => item.patternWithCompletion)
+                          .filter(
+                            (
+                              pattern
+                            ): pattern is Exclude<typeof pattern, undefined> =>
+                              !!pattern
+                          )
+                          .map((pattern) => (
+                            <Pattern
+                              key={pattern.hash}
+                              userLoadingState={userLoadingState}
+                              pattern={pattern}
+                            />
+                          ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
               </li>
+            ))}
+          </ul>
+          <p className={styles.ungroupedTitle}>
+            {translate('ungroupedWorldDrop')}
+          </p>
+          <ul className={styles.list}>
+            {ungroupedPatternsWithCompletion.map((pattern) => (
+              <Pattern
+                key={pattern.hash}
+                userLoadingState={userLoadingState}
+                pattern={pattern}
+              />
             ))}
           </ul>
         </main>
