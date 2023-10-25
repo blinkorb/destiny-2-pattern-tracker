@@ -35,6 +35,18 @@ import {
 import { logError, logInfo } from './utils.js';
 
 const useStyles = createUseStyles((theme) => ({
+  loading: {
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  main: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+  },
   list: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -594,16 +606,18 @@ const Home = () => {
   return (
     <>
       {shouldRenderLoading && (
-        <p>
-          {translate(manifestLoadingState || 'loading')}
-          <LoadingDots />
-        </p>
+        <main className={styles.loading}>
+          <p>
+            {translate(manifestLoadingState || 'loading')}
+            <LoadingDots />
+          </p>
+        </main>
       )}
       <noscript>
         <p>Javascript is disabled. This site requires Javascript to run.</p>
       </noscript>
       {!shouldRenderLoading && (
-        <>
+        <main>
           {state.persistent?.items && (
             <p>
               {
@@ -651,7 +665,7 @@ const Home = () => {
               </li>
             ))}
           </ul>
-        </>
+        </main>
       )}
     </>
   );

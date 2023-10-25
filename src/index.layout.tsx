@@ -10,6 +10,9 @@ const useStyles = createUseStyles((theme) => ({
       boxSizing: 'border-box',
     },
     'html,body': {
+      display: 'flex',
+      flex: 1,
+      minHeight: '100vh',
       backgroundColor: theme.BLACK,
       fontFamily: 'arial, helvetica, sans-serif',
       fontSize: 16,
