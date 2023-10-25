@@ -34,7 +34,7 @@ import {
 } from './types.js';
 import { logError, logInfo } from './utils.js';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme) => ({
   list: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -69,7 +69,7 @@ const useStyles = createUseStyles({
     left: 0,
     flexDirection: 'column',
     padding: 8,
-    backgroundColor: '#333',
+    backgroundColor: theme.BLACK,
     zIndex: 3,
     pointerEvents: 'none',
   },
@@ -87,11 +87,12 @@ const useStyles = createUseStyles({
     left: 0,
     width: '100%',
     height: '100%',
-    border: '1px solid white',
+    border: '1px solid',
+    borderColor: theme.GRAY_LIGHTEST,
     zIndex: 1,
   },
   borderComplete: {
-    border: '1px solid yellow',
+    borderColor: theme.YELLOW,
   },
   progress: {
     position: 'absolute',
@@ -99,12 +100,12 @@ const useStyles = createUseStyles({
     right: 0,
     padding: 2,
     zIndex: 2,
-    color: 'white',
+    color: theme.WHITE,
   },
   progressComplete: {
-    color: 'yellow',
+    color: theme.YELLOW,
   },
-});
+}));
 
 const Home = () => {
   const styles = useStyles();
