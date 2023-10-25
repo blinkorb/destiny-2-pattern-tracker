@@ -5,7 +5,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
+import Footer from './components/footer.js';
 import LoadingDots from './components/loading-dots.js';
+import Navbar from './components/navbar.js';
 import {
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
@@ -41,17 +43,19 @@ const useStyles = createUseStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    paddingTop: 48,
   },
   main: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
+    paddingTop: 48,
   },
   list: {
     display: 'flex',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: 0,
+    padding: 12,
     margin: 0,
     gap: 8,
   },
@@ -618,28 +622,27 @@ const Home = () => {
 
   return (
     <>
+      <Navbar
+        reAuth={reAuth}
+        isLoggedIn={!!state.session?.token}
+        acquiredCount={
+          patternsWithCompletion.filter((pattern) => pattern.complete).length
+        }
+        totalCount={patternsWithCompletion.length}
+      />
       {shouldRenderLoading && (
         <main className={styles.loading}>
           <p>
             {translate(manifestLoadingState || 'loading')}
             <LoadingDots />
           </p>
+          <noscript>
+            <p>Javascript is disabled. This site requires Javascript to run.</p>
+          </noscript>
         </main>
       )}
-      <noscript>
-        <p>Javascript is disabled. This site requires Javascript to run.</p>
-      </noscript>
       {!shouldRenderLoading && (
-        <main>
-          {state.persistent?.items && (
-            <p>
-              {
-                patternsWithCompletion.filter((pattern) => pattern.complete)
-                  .length
-              }
-              /{patternsWithCompletion.length}
-            </p>
-          )}
+        <main className={styles.main}>
           <ul className={styles.list}>
             {patternsWithCompletion.map((pattern) => (
               <li key={pattern.hash} className={styles.listItem}>
@@ -689,6 +692,7 @@ const Home = () => {
           </ul>
         </main>
       )}
+      <Footer />
     </>
   );
 };

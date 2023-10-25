@@ -12,11 +12,32 @@ const useStyles = createUseStyles((theme) => ({
     'html,body': {
       display: 'flex',
       flex: 1,
+      flexDirection: 'column',
       minHeight: '100vh',
       backgroundColor: theme.BLACK,
       fontFamily: 'arial, helvetica, sans-serif',
       fontSize: 16,
       color: theme.WHITE,
+      padding: 0,
+      margin: 0,
+    },
+    a: {
+      color: theme.YELLOW,
+      textDecoration: 'underline',
+    },
+    button: {
+      display: 'flex',
+      flex: 0,
+      border: 'none',
+      borderRadius: 2,
+      backgroundColor: theme.YELLOW,
+      color: theme.BLACK,
+      fontSize: 16,
+      padding: '4px 12px',
+      cursor: 'pointer',
+    },
+    '*:disabled': {
+      opacity: 0.5,
     },
   },
 }));

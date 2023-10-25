@@ -3,6 +3,7 @@ import type {
   SessionStore,
   SUPPORTED_LANGUAGES,
 } from './constants.js';
+import type { TranslationKey } from './translations.js';
 
 export interface SessionState {
   [SessionStore.TOKEN]?: TokenResponse;
@@ -422,7 +423,7 @@ export interface PatternWithCompletion extends DestinyItem {
 }
 
 export interface WeaponGroup {
-  key: string;
+  key: TranslationKey;
   groups: readonly (readonly {
     patternHash: number;
     patternWithCompletion?: PatternWithCompletion;
