@@ -12,6 +12,7 @@ import {
   SessionStore,
 } from './constants.js';
 import { useStateContext } from './context.js';
+import { TranslationKey, useTranslate } from './translations.js';
 import {
   APIErrorCode,
   APIResponse,
@@ -108,12 +109,13 @@ const Home = () => {
   const styles = useStyles();
   const router = useRouter();
   const location = useLocation();
+  const translate = useTranslate();
   const { code, state: authState } = queryString.parse(location.search);
   const isClientRender = useIsClientRender();
   const [state, setState] = useStateContext();
   const [manifestLoadingState, setManifestLoadingState] = useState<
-    false | string
-  >('Loading manifest');
+    false | TranslationKey
+  >('loadingManifest');
   const [profile, setProfile] = useState<ProfileResponse>();
 
   const reAuth = useCallback(() => {
@@ -338,7 +340,7 @@ const Home = () => {
         return;
       }
 
-      setManifestLoadingState('Loading manifest');
+      setManifestLoadingState('loadingManifest');
 
       const nextManifest =
         meta &&
@@ -369,7 +371,7 @@ const Home = () => {
                 throw new Error(response.Message);
               });
 
-      setManifestLoadingState('Loading items');
+      setManifestLoadingState('loadingItems');
 
       const nextItems =
         meta &&
@@ -396,7 +398,7 @@ const Home = () => {
               }
             });
 
-      setManifestLoadingState('Loading records');
+      setManifestLoadingState('loadingRecords');
 
       const nextRecords =
         meta &&
@@ -422,6 +424,8 @@ const Home = () => {
                 throw new Error('Failed to request records');
               }
             });
+
+      setManifestLoadingState('loadingPresentationNodes');
 
       const nextPresentationNodes =
         meta &&
@@ -587,7 +591,9 @@ const Home = () => {
 
   return (
     <>
-      {shouldRenderLoading && <p>{manifestLoadingState}...</p>}
+      {shouldRenderLoading && (
+        <p>{translate(manifestLoadingState || 'loading')}...</p>
+      )}
       <noscript>
         <p>Javascript is disabled. This site requires Javascript to run.</p>
       </noscript>
