@@ -51,12 +51,14 @@ const Navbar = ({
   isLoggedIn,
   isLoggingIn,
   reAuth,
+  clearAuth,
 }: {
   acquiredCount: number;
   totalCount: number;
   isLoggedIn: boolean;
   isLoggingIn: boolean;
   reAuth: () => void;
+  clearAuth: () => void;
 }) => {
   const [isLoggingInOrOut, setIsLoggingInOrOut] = useState(false);
   const isClientRender = useIsClientRender();
@@ -88,7 +90,7 @@ const Navbar = ({
         </span>
       )}
       {isLoggedIn && isClientRender ? (
-        <button disabled={showLoading}>
+        <button disabled={showLoading} onClick={clearAuth}>
           {showLoading ? (
             <>
               {translate('loading')}

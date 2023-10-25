@@ -161,6 +161,13 @@ const Home = () => {
     globalThis.location.href = `${process.env.CLIENT_API_URL}/${state.language}/OAuth/Authorize?client_id=${process.env.CLIENT_ID}&response_type=code&state=${nextAuthState}`;
   }, [setState, state.language]);
 
+  const clearAuth = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      session: null,
+    }));
+  }, [setState]);
+
   useEffect(() => {
     if (!isClientRender) {
       return;
@@ -616,6 +623,7 @@ const Home = () => {
     <>
       <Navbar
         reAuth={reAuth}
+        clearAuth={clearAuth}
         isLoggedIn={!!state.session?.token}
         isLoggingIn={!!code}
         acquiredCount={
