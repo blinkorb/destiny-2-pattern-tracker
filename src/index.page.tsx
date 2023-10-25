@@ -113,9 +113,16 @@ const useStyles = createUseStyles((theme) => ({
     padding: 2,
     zIndex: 2,
     color: theme.WHITE,
+    fontSize: 14,
   },
   progressComplete: {
     color: theme.YELLOW,
+  },
+  hideSmall: {
+    display: 'none',
+    '@media all and (min-width: 768px)': {
+      display: 'initial',
+    },
   },
 }));
 
@@ -127,6 +134,7 @@ const Home = () => {
   const { code, state: authState } = queryString.parse(location.search);
   const isClientRender = useIsClientRender();
   const [state, setState] = useStateContext();
+  const [userLoadingState, setUserLoadingState] = useState<boolean>(true);
   const [manifestLoadingState, setManifestLoadingState] = useState<
     false | TranslationKey
   >('loadingManifest');
@@ -234,11 +242,14 @@ const Home = () => {
     }
 
     const getProfile = async () => {
+      setUserLoadingState(true);
+
       const token = state.session?.token?.access_token;
       const tokenType = state.session?.token?.token_type;
       const membershipId = state.session?.token?.membership_id;
 
       if (!membershipId || !token || !tokenType) {
+        setUserLoadingState(false);
         return;
       }
 
@@ -279,6 +290,7 @@ const Home = () => {
       const firstProfile = linkedProfiles.profiles[0];
 
       if (!firstProfile) {
+        setUserLoadingState(false);
         throw new Error('No profiles found');
       }
 
@@ -316,6 +328,7 @@ const Home = () => {
           throw new Error(response.Message);
         });
 
+      setUserLoadingState(false);
       setProfile(profileResponse);
     };
 
@@ -643,18 +656,27 @@ const Home = () => {
                   })}
                 />
 
-                {pattern.objectives && (
-                  <div
-                    className={classNames(styles.progress, {
-                      [styles.progressComplete]: pattern.complete,
-                    })}
-                  >
-                    {pattern.objectives.map((objective) => (
-                      <>
-                        {objective.progress}/{objective.completionValue}
-                      </>
-                    ))}
+                {userLoadingState ? (
+                  <div className={styles.progress}>
+                    <span className={styles.hideSmall}>
+                      {translate('loading')}
+                    </span>
+                    <LoadingDots />
                   </div>
+                ) : (
+                  pattern.objectives && (
+                    <div
+                      className={classNames(styles.progress, {
+                        [styles.progressComplete]: pattern.complete,
+                      })}
+                    >
+                      {pattern.objectives.map((objective) => (
+                        <>
+                          {objective.progress}/{objective.completionValue}
+                        </>
+                      ))}
+                    </div>
+                  )
                 )}
                 <div className={styles.listTextWrapper}>
                   <p className={styles.listTitle}>
