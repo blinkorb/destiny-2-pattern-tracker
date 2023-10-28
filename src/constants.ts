@@ -128,6 +128,9 @@ export const GROUPINGS: WeaponGroupings = [
         key: 'secondary',
         items: [
           {
+            patternHash: 2216711429,
+          },
+          {
             patternHash: 602820804,
           },
           {
