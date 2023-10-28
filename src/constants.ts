@@ -288,25 +288,6 @@ export const GROUPINGS: WeaponGroupings = [
   },
   // Campaigns
   {
-    key: 'theWitchQueen',
-    groups: [
-      {
-        key: 'standard',
-        items: [
-          {
-            patternHash: 757218923,
-          },
-          {
-            patternHash: 2343708185,
-          },
-          {
-            patternHash: 1055778551,
-          },
-        ],
-      },
-    ],
-  },
-  {
     key: 'lightfall',
     groups: [
       {
@@ -326,6 +307,25 @@ export const GROUPINGS: WeaponGroupings = [
           },
           {
             patternHash: 3585040495,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'theWitchQueen',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            patternHash: 757218923,
+          },
+          {
+            patternHash: 2343708185,
+          },
+          {
+            patternHash: 1055778551,
           },
         ],
       },
