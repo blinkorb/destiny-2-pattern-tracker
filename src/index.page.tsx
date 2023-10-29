@@ -24,11 +24,14 @@ import {
   SessionStore,
 } from './constants.js';
 import { useStateContext } from './context.js';
+import { onlyPatternsAndOutput } from './items.js';
 import { TranslationKey, useTranslate } from './translations.js';
 import {
   APIErrorCode,
   APIResponse,
   ComponentType,
+  DamageTypeResponse,
+  EquipmentSlotResponse,
   ItemsResponse,
   ItemType,
   LinkedProfilesResponse,
@@ -43,7 +46,7 @@ import {
   RecordsResponse,
   TokenResponse,
 } from './types.js';
-import { logError, logInfo } from './utils.js';
+import { exists, logError, logInfo } from './utils.js';
 
 export const title = 'Destiny 2 Pattern Tracker';
 export const description =
@@ -359,13 +362,24 @@ const Home = () => {
     }
 
     const loadManifest = async () => {
-      const { meta, manifest, items, records, presentationNodes } =
-        state.persistent ?? {};
+      const {
+        meta,
+        manifest,
+        items,
+        records,
+        presentationNodes,
+        damageType,
+        equipmentSlot,
+      } = state.persistent ?? {};
 
       if (
         meta &&
         manifest &&
         items &&
+        records &&
+        presentationNodes &&
+        damageType &&
+        equipmentSlot &&
         meta.manifestUpdated >= Date.now() - MANIFEST_TIMEOUT &&
         meta.manifestLanguage === state.language
       ) {
@@ -406,19 +420,25 @@ const Home = () => {
 
       setManifestLoadingState('loadingItems');
 
-      const [nextItems, nextRecords, nextPresentationNodes] = await Promise.all(
-        [
-          meta &&
-          items &&
-          manifest?.version === nextManifest.version &&
-          meta.manifestLanguage === state.language
-            ? items
-            : fetch(
-                `${process.env.CLIENT_API_URL}${
-                  nextManifest.jsonWorldComponentContentPaths[state.language]
-                    .DestinyInventoryItemDefinition
-                }`
-              ).then<ItemsResponse>(async (response) => {
+      const [
+        nextItems,
+        nextRecords,
+        nextPresentationNodes,
+        nextDamageType,
+        nextEquipmentSlot,
+      ] = await Promise.all([
+        meta &&
+        items &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? items
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyInventoryItemDefinition
+              }`
+            )
+              .then<ItemsResponse>(async (response) => {
                 if (response.ok) {
                   return JSON.parse(await response.text());
                 }
@@ -430,55 +450,101 @@ const Home = () => {
 
                   throw new Error('Failed to request items');
                 }
-              }),
-          meta &&
-          records &&
-          manifest?.version === nextManifest.version &&
-          meta.manifestLanguage === state.language
-            ? records
-            : fetch(
-                `${process.env.CLIENT_API_URL}${
-                  nextManifest.jsonWorldComponentContentPaths[state.language]
-                    .DestinyRecordDefinition
-                }`
-              ).then<RecordsResponse>(async (response) => {
-                if (response.ok) {
-                  return JSON.parse(await response.text());
-                }
+              })
+              .then((i) => onlyPatternsAndOutput(i)),
+        meta &&
+        records &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? records
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyRecordDefinition
+              }`
+            ).then<RecordsResponse>(async (response) => {
+              if (response.ok) {
+                return JSON.parse(await response.text());
+              }
 
-                try {
-                  return JSON.parse(await response.text());
-                } catch (error) {
-                  logError(error);
+              try {
+                return JSON.parse(await response.text());
+              } catch (error) {
+                logError(error);
 
-                  throw new Error('Failed to request records');
-                }
-              }),
-          meta &&
-          presentationNodes &&
-          manifest?.version === nextManifest.version &&
-          meta.manifestLanguage === state.language
-            ? presentationNodes
-            : fetch(
-                `${process.env.CLIENT_API_URL}${
-                  nextManifest.jsonWorldComponentContentPaths[state.language]
-                    .DestinyPresentationNodeDefinition
-                }`
-              ).then<PresentationNodesResponse>(async (response) => {
-                if (response.ok) {
-                  return JSON.parse(await response.text());
-                }
+                throw new Error('Failed to request records');
+              }
+            }),
+        meta &&
+        presentationNodes &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? presentationNodes
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyPresentationNodeDefinition
+              }`
+            ).then<PresentationNodesResponse>(async (response) => {
+              if (response.ok) {
+                return JSON.parse(await response.text());
+              }
 
-                try {
-                  return JSON.parse(await response.text());
-                } catch (error) {
-                  logError(error);
+              try {
+                return JSON.parse(await response.text());
+              } catch (error) {
+                logError(error);
 
-                  throw new Error('Failed to request presentation nodes');
-                }
-              }),
-        ]
-      );
+                throw new Error('Failed to request presentation nodes');
+              }
+            }),
+        meta &&
+        damageType &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? damageType
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyDamageTypeDefinition
+              }`
+            ).then<DamageTypeResponse>(async (response) => {
+              if (response.ok) {
+                return JSON.parse(await response.text());
+              }
+
+              try {
+                return JSON.parse(await response.text());
+              } catch (error) {
+                logError(error);
+
+                throw new Error('Failed to request damage types');
+              }
+            }),
+        meta &&
+        equipmentSlot &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? equipmentSlot
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyEquipmentSlotDefinition
+              }`
+            ).then<EquipmentSlotResponse>(async (response) => {
+              if (response.ok) {
+                return JSON.parse(await response.text());
+              }
+
+              try {
+                return JSON.parse(await response.text());
+              } catch (error) {
+                logError(error);
+
+                throw new Error('Failed to request equipment slots');
+              }
+            }),
+      ]);
 
       const nextMeta = {
         ...meta,
@@ -495,6 +561,8 @@ const Home = () => {
           items: nextItems,
           records: nextRecords,
           presentationNodes: nextPresentationNodes,
+          damageType: nextDamageType,
+          equipmentSlot: nextEquipmentSlot,
         },
       }));
 
@@ -611,7 +679,7 @@ const Home = () => {
           complete,
         };
       })
-      .filter((item): item is Exclude<typeof item, null> => !!item);
+      .filter(exists);
   }, [patternRecordMap, patterns, profile?.profileRecords.data.records]);
 
   const ungroupedPatternsWithCompletion = useMemo(() => {
@@ -689,12 +757,7 @@ const Home = () => {
                       <ul className={styles.subGroupItemList}>
                         {subGroup.items
                           .map((item) => item.patternWithCompletion)
-                          .filter(
-                            (
-                              pattern
-                            ): pattern is Exclude<typeof pattern, undefined> =>
-                              !!pattern
-                          )
+                          .filter(exists)
                           .map((pattern) => (
                             <Pattern
                               key={pattern.hash}

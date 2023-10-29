@@ -13,7 +13,7 @@ export const createDB = () => {
       resolve(db);
     };
 
-    DBOpenRequest.onupgradeneeded = (event) => {
+    DBOpenRequest.onupgradeneeded = async (event) => {
       db = (event.target as IDBOpenDBRequest).result;
 
       db.onerror = () => {
@@ -47,6 +47,18 @@ export const createDB = () => {
 
       if (!db.objectStoreNames.contains(DBStore.PRESENTATION_NODES)) {
         const objectStore = db.createObjectStore(DBStore.PRESENTATION_NODES);
+
+        objectStore.createIndex('id', 'id', { unique: true });
+      }
+
+      if (!db.objectStoreNames.contains(DBStore.DAMAGE_TYPE)) {
+        const objectStore = db.createObjectStore(DBStore.DAMAGE_TYPE);
+
+        objectStore.createIndex('id', 'id', { unique: true });
+      }
+
+      if (!db.objectStoreNames.contains(DBStore.EQUIPMENT_SLOT)) {
+        const objectStore = db.createObjectStore(DBStore.EQUIPMENT_SLOT);
 
         objectStore.createIndex('id', 'id', { unique: true });
       }

@@ -19,6 +19,8 @@ export interface PersistentState {
   [DBStore.ITEMS]: ItemsResponse;
   [DBStore.RECORDS]: RecordsResponse;
   [DBStore.PRESENTATION_NODES]: PresentationNodesResponse;
+  [DBStore.EQUIPMENT_SLOT]: EquipmentSlotResponse;
+  [DBStore.DAMAGE_TYPE]: DamageTypeResponse;
 }
 
 export interface StateContextValue {
@@ -436,3 +438,23 @@ export interface WeaponGroup {
 }
 
 export type WeaponGroupings = readonly WeaponGroup[];
+
+export interface EquipmentSlot {
+  displayProperties: DisplayProperties;
+  hash: number;
+}
+
+export type EquipmentSlotResponse = Record<string, EquipmentSlot>;
+
+export interface DamageType {
+  displayProperties: DisplayProperties;
+  color: {
+    red: number;
+    green: number;
+    blue: number;
+    alpha: number;
+  };
+  hash: number;
+}
+
+export type DamageTypeResponse = Record<string, DamageType>;

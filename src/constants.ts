@@ -7,7 +7,7 @@ export const POLLING_INTERVAL = 1000 * 60;
 
 export const SESSION_STORAGE_KEY = 'd2pt';
 export const DB_NAME = 'd2pt';
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 
 export enum SessionStore {
   TOKEN = 'token',
@@ -20,6 +20,8 @@ export enum DBStore {
   ITEMS = 'items',
   RECORDS = 'records',
   PRESENTATION_NODES = 'presentationNodes',
+  EQUIPMENT_SLOT = 'equipmentSlot',
+  DAMAGE_TYPE = 'damageType',
 }
 
 export const DEFAULT_LANGUAGE = 'en' as const;
