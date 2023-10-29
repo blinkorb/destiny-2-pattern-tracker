@@ -413,7 +413,7 @@ const Home = () => {
           manifest?.version === nextManifest.version &&
           meta.manifestLanguage === state.language
             ? items
-            : await fetch(
+            : fetch(
                 `${process.env.CLIENT_API_URL}${
                   nextManifest.jsonWorldComponentContentPaths[state.language]
                     .DestinyInventoryItemDefinition
@@ -436,7 +436,7 @@ const Home = () => {
           manifest?.version === nextManifest.version &&
           meta.manifestLanguage === state.language
             ? records
-            : await fetch(
+            : fetch(
                 `${process.env.CLIENT_API_URL}${
                   nextManifest.jsonWorldComponentContentPaths[state.language]
                     .DestinyRecordDefinition
@@ -459,7 +459,7 @@ const Home = () => {
           manifest?.version === nextManifest.version &&
           meta.manifestLanguage === state.language
             ? presentationNodes
-            : await fetch(
+            : fetch(
                 `${process.env.CLIENT_API_URL}${
                   nextManifest.jsonWorldComponentContentPaths[state.language]
                     .DestinyPresentationNodeDefinition
