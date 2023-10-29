@@ -406,84 +406,79 @@ const Home = () => {
 
       setManifestLoadingState('loadingItems');
 
-      const nextItems =
-        meta &&
-        items &&
-        manifest?.version === nextManifest.version &&
-        meta.manifestLanguage === state.language
-          ? items
-          : await fetch(
-              `${process.env.CLIENT_API_URL}${
-                nextManifest.jsonWorldComponentContentPaths[state.language]
-                  .DestinyInventoryItemDefinition
-              }`
-            ).then<ItemsResponse>(async (response) => {
-              if (response.ok) {
-                return JSON.parse(await response.text());
-              }
+      const [nextItems, nextRecords, nextPresentationNodes] = await Promise.all(
+        [
+          meta &&
+          items &&
+          manifest?.version === nextManifest.version &&
+          meta.manifestLanguage === state.language
+            ? items
+            : await fetch(
+                `${process.env.CLIENT_API_URL}${
+                  nextManifest.jsonWorldComponentContentPaths[state.language]
+                    .DestinyInventoryItemDefinition
+                }`
+              ).then<ItemsResponse>(async (response) => {
+                if (response.ok) {
+                  return JSON.parse(await response.text());
+                }
 
-              try {
-                return JSON.parse(await response.text());
-              } catch (error) {
-                logError(error);
+                try {
+                  return JSON.parse(await response.text());
+                } catch (error) {
+                  logError(error);
 
-                throw new Error('Failed to request items');
-              }
-            });
+                  throw new Error('Failed to request items');
+                }
+              }),
+          meta &&
+          records &&
+          manifest?.version === nextManifest.version &&
+          meta.manifestLanguage === state.language
+            ? records
+            : await fetch(
+                `${process.env.CLIENT_API_URL}${
+                  nextManifest.jsonWorldComponentContentPaths[state.language]
+                    .DestinyRecordDefinition
+                }`
+              ).then<RecordsResponse>(async (response) => {
+                if (response.ok) {
+                  return JSON.parse(await response.text());
+                }
 
-      setManifestLoadingState('loadingRecords');
+                try {
+                  return JSON.parse(await response.text());
+                } catch (error) {
+                  logError(error);
 
-      const nextRecords =
-        meta &&
-        records &&
-        manifest?.version === nextManifest.version &&
-        meta.manifestLanguage === state.language
-          ? records
-          : await fetch(
-              `${process.env.CLIENT_API_URL}${
-                nextManifest.jsonWorldComponentContentPaths[state.language]
-                  .DestinyRecordDefinition
-              }`
-            ).then<RecordsResponse>(async (response) => {
-              if (response.ok) {
-                return JSON.parse(await response.text());
-              }
+                  throw new Error('Failed to request records');
+                }
+              }),
+          meta &&
+          presentationNodes &&
+          manifest?.version === nextManifest.version &&
+          meta.manifestLanguage === state.language
+            ? presentationNodes
+            : await fetch(
+                `${process.env.CLIENT_API_URL}${
+                  nextManifest.jsonWorldComponentContentPaths[state.language]
+                    .DestinyPresentationNodeDefinition
+                }`
+              ).then<PresentationNodesResponse>(async (response) => {
+                if (response.ok) {
+                  return JSON.parse(await response.text());
+                }
 
-              try {
-                return JSON.parse(await response.text());
-              } catch (error) {
-                logError(error);
+                try {
+                  return JSON.parse(await response.text());
+                } catch (error) {
+                  logError(error);
 
-                throw new Error('Failed to request records');
-              }
-            });
-
-      setManifestLoadingState('loadingPresentationNodes');
-
-      const nextPresentationNodes =
-        meta &&
-        presentationNodes &&
-        manifest?.version === nextManifest.version &&
-        meta.manifestLanguage === state.language
-          ? presentationNodes
-          : await fetch(
-              `${process.env.CLIENT_API_URL}${
-                nextManifest.jsonWorldComponentContentPaths[state.language]
-                  .DestinyPresentationNodeDefinition
-              }`
-            ).then<PresentationNodesResponse>(async (response) => {
-              if (response.ok) {
-                return JSON.parse(await response.text());
-              }
-
-              try {
-                return JSON.parse(await response.text());
-              } catch (error) {
-                logError(error);
-
-                throw new Error('Failed to request presentation nodes');
-              }
-            });
+                  throw new Error('Failed to request presentation nodes');
+                }
+              }),
+        ]
+      );
 
       const nextMeta = {
         ...meta,

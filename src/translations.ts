@@ -19,8 +19,6 @@ const TRANSLATIONS = {
     loading: 'Loading',
     loadingManifest: 'Loading manifest',
     loadingItems: 'Loading items (this takes a while)',
-    loadingRecords: 'Loading records',
-    loadingPresentationNodes: 'Loading presentation nodes',
     authenticationExpired: 'Authentication expired. This happens every hour.',
     pleaseLoginAgain: 'Please login again.',
     login: 'Login',
