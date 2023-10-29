@@ -365,6 +365,7 @@ export interface DestinyItem {
   hash: number;
   collectibleHash?: number;
   itemType: ItemType;
+  itemSubType: ItemSubType;
   displayProperties: DisplayProperties;
   flavorText: string;
   crafting?: ItemCrafting;

@@ -24,7 +24,7 @@ import {
   SessionStore,
 } from './constants.js';
 import { useStateContext } from './context.js';
-import { onlyPatternsAndOutput } from './items.js';
+import { bySlotThenTypeThenName, onlyPatternsAndOutput } from './items.js';
 import { TranslationKey, useTranslate } from './translations.js';
 import {
   APIErrorCode,
@@ -679,8 +679,22 @@ const Home = () => {
           complete,
         };
       })
-      .filter(exists);
-  }, [patternRecordMap, patterns, profile?.profileRecords.data.records]);
+      .filter(exists)
+      .sort((a, b) =>
+        bySlotThenTypeThenName(
+          a,
+          b,
+          state.persistent?.items,
+          state.persistent?.equipmentSlot
+        )
+      );
+  }, [
+    patternRecordMap,
+    patterns,
+    profile?.profileRecords.data.records,
+    state.persistent?.equipmentSlot,
+    state.persistent?.items,
+  ]);
 
   const ungroupedPatternsWithCompletion = useMemo(() => {
     return patternsWithCompletion.filter(
@@ -697,23 +711,45 @@ const Home = () => {
       ...group,
       groups: group.groups.map((subGroup) => ({
         ...subGroup,
-        items: subGroup.items.map((item) => {
-          const patternWithCompletion = patternsWithCompletion.find(
-            (pattern) => pattern.hash === item.patternHash
-          );
+        items: subGroup.items
+          .map((item) => {
+            const patternWithCompletion = patternsWithCompletion.find(
+              (pattern) => pattern.hash === item.patternHash
+            );
 
-          if (!patternWithCompletion) {
-            logInfo(`Could not find pattern for hash "${item.patternHash}"`);
-          }
+            if (!patternWithCompletion) {
+              logInfo(`Could not find pattern for hash "${item.patternHash}"`);
+            }
 
-          return {
-            ...item,
-            patternWithCompletion,
-          };
-        }),
+            return {
+              ...item,
+              patternWithCompletion,
+            };
+          })
+          .filter(
+            (
+              item
+            ): item is Required<{
+              patternWithCompletion: PatternWithCompletion;
+              patternHash: number;
+            }> => !!item.patternWithCompletion
+          )
+          .sort((a, b) =>
+            bySlotThenTypeThenName(
+              a.patternWithCompletion,
+              b.patternWithCompletion,
+              state.persistent?.items,
+              state.persistent?.equipmentSlot
+            )
+          ),
       })),
     }));
-  }, [isClientRender, patternsWithCompletion]);
+  }, [
+    isClientRender,
+    patternsWithCompletion,
+    state.persistent?.equipmentSlot,
+    state.persistent?.items,
+  ]);
 
   const shouldRenderLoading =
     !isClientRender || !state.dbInitialized || manifestLoadingState !== false;
