@@ -11,14 +11,14 @@ export interface SessionState {
 }
 
 export interface PersistentState {
-  [DBStore.META]?: {
+  [DBStore.META]: {
     manifestUpdated: number;
     manifestLanguage: string;
   };
-  [DBStore.MANIFEST]?: ManifestResponse;
-  [DBStore.ITEMS]?: ItemsResponse;
-  [DBStore.RECORDS]?: RecordsResponse;
-  [DBStore.PRESENTATION_NODES]?: PresentationNodesResponse;
+  [DBStore.MANIFEST]: ManifestResponse;
+  [DBStore.ITEMS]: ItemsResponse;
+  [DBStore.RECORDS]: RecordsResponse;
+  [DBStore.PRESENTATION_NODES]: PresentationNodesResponse;
 }
 
 export interface StateContextValue {

@@ -83,27 +83,27 @@ export const setDBValue = <T extends DBStore>(
 };
 
 export const getDBValue = <T extends DBStore>(db: IDBDatabase, store: T) => {
-  return new Promise<Exclude<StateContextValue['persistent'], null>[T]>(
-    (resolve) => {
-      const transaction = db.transaction([store], 'readonly');
+  return new Promise<
+    Exclude<StateContextValue['persistent'], null>[T] | undefined
+  >((resolve) => {
+    const transaction = db.transaction([store], 'readonly');
 
-      transaction.onerror = () => {
-        // eslint-disable-next-line no-console
-        console.error('Error creating get transaction in DB');
-      };
+    transaction.onerror = () => {
+      // eslint-disable-next-line no-console
+      console.error('Error creating get transaction in DB');
+    };
 
-      const objectStore = transaction.objectStore(store);
+    const objectStore = transaction.objectStore(store);
 
-      const objectStoreRequest = objectStore.get(store);
+    const objectStoreRequest = objectStore.get(store);
 
-      objectStoreRequest.onerror = () => {
-        // eslint-disable-next-line no-console
-        console.error('Error getting claimed in DB');
-      };
+    objectStoreRequest.onerror = () => {
+      // eslint-disable-next-line no-console
+      console.error('Error getting claimed in DB');
+    };
 
-      objectStoreRequest.onsuccess = () => {
-        resolve(objectStoreRequest.result ?? undefined);
-      };
-    }
-  );
+    objectStoreRequest.onsuccess = () => {
+      resolve(objectStoreRequest.result ?? undefined);
+    };
+  });
 };
