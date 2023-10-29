@@ -38,10 +38,10 @@ import {
   ManifestResponse,
   MembershipType,
   PatternWithCompletion,
-  PresentationNode,
+  PresentationNodeItem,
+  PresentationNodeItemWithPresentationNodes,
+  PresentationNodeItemWithRecords,
   PresentationNodesResponse,
-  PresentationNodeWithPresentationNodes,
-  PresentationNodeWithRecords,
   ProfileResponse,
   RecordsResponse,
   TokenResponse,
@@ -594,7 +594,7 @@ const Home = () => {
 
     const reduceRecordHashes = (
       acc: readonly number[],
-      node: PresentationNode | undefined
+      node: PresentationNodeItem | undefined
     ): readonly number[] => {
       if (!node) {
         return acc;
@@ -602,7 +602,7 @@ const Home = () => {
 
       if (node.children.presentationNodes.length) {
         return (
-          node as PresentationNodeWithPresentationNodes
+          node as PresentationNodeItemWithPresentationNodes
         ).children.presentationNodes.reduce(
           (acc2, subNode) =>
             reduceRecordHashes(
@@ -614,7 +614,7 @@ const Home = () => {
       } else if (node.children.records.length) {
         return [
           ...acc,
-          ...(node as PresentationNodeWithRecords).children.records.map(
+          ...(node as PresentationNodeItemWithRecords).children.records.map(
             (record) => record.recordHash
           ),
         ];

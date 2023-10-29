@@ -297,6 +297,17 @@ export enum PresentationNodeType {
   Craftable = 5,
 }
 
+export enum DamageType {
+  None = 0,
+  Kinetic = 1,
+  Arc = 2,
+  Thermal = 3,
+  Void = 4,
+  Raid = 5,
+  Stasis = 6,
+  Strand = 7,
+}
+
 export interface PresentationNodeReference {
   presentationNodeHash: number;
   nodeDisplayPriority: number;
@@ -307,7 +318,7 @@ export interface RecordReference {
   nodeDisplayPriority: number;
 }
 
-export interface PresentationNodeWithPresentationNodes {
+export interface PresentationNodeItemWithPresentationNodes {
   displayProperties: DisplayProperties;
   objectiveHash: number;
   hash: number;
@@ -317,17 +328,17 @@ export interface PresentationNodeWithPresentationNodes {
   };
 }
 
-export interface PresentationNodeWithRecords
-  extends Omit<PresentationNodeWithPresentationNodes, 'children'> {
+export interface PresentationNodeItemWithRecords
+  extends Omit<PresentationNodeItemWithPresentationNodes, 'children'> {
   children: {
     presentationNodes: readonly never[];
     records: readonly RecordReference[];
   };
 }
 
-export type PresentationNode =
-  | PresentationNodeWithPresentationNodes
-  | PresentationNodeWithRecords;
+export type PresentationNodeItem =
+  | PresentationNodeItemWithPresentationNodes
+  | PresentationNodeItemWithRecords;
 
 export interface DisplayPropertiesWithIcon {
   name: string;
@@ -357,6 +368,12 @@ export interface DestinyItem {
   displayProperties: DisplayProperties;
   flavorText: string;
   crafting?: ItemCrafting;
+  equippingBlock?: {
+    equipmentSlotTypeHash: number;
+    ammoType: number;
+  };
+  defaultDamageType?: DamageType;
+  defaultDamageTypeHash?: number;
 }
 
 export interface RecordItem {
@@ -394,7 +411,7 @@ export type ItemsResponse = Record<string, DestinyItem>;
 
 export type RecordsResponse = Record<string, RecordItem>;
 
-export type PresentationNodesResponse = Record<string, PresentationNode>;
+export type PresentationNodesResponse = Record<string, PresentationNodeItem>;
 
 export enum TokenType {
   Bearer = 'Bearer',
@@ -439,15 +456,17 @@ export interface WeaponGroup {
 
 export type WeaponGroupings = readonly WeaponGroup[];
 
-export interface EquipmentSlot {
+export interface EquipmentSlotItem {
   displayProperties: DisplayProperties;
   hash: number;
+  index: number;
 }
 
-export type EquipmentSlotResponse = Record<string, EquipmentSlot>;
+export type EquipmentSlotResponse = Record<string, EquipmentSlotItem>;
 
-export interface DamageType {
+export interface DamageTypeItem {
   displayProperties: DisplayProperties;
+  enumValue: DamageType;
   color: {
     red: number;
     green: number;
@@ -455,6 +474,7 @@ export interface DamageType {
     alpha: number;
   };
   hash: number;
+  index: number;
 }
 
 export type DamageTypeResponse = Record<string, DamageType>;

@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'react-jss';
 
-import { WeaponGroupings } from './types.js';
+import { ItemSubType, WeaponGroupings } from './types.js';
 
 export const MANIFEST_TIMEOUT = 1000 * 60 * 5;
 export const POLLING_INTERVAL = 1000 * 60;
@@ -709,3 +709,23 @@ export const THEME = {
   HIGHLIGHT: '#8ddd87',
   BRAND: '#ff2c68',
 } satisfies DefaultTheme;
+
+export const ITEM_SUB_TYPE_SORT = [
+  ItemSubType.HandCannon,
+  ItemSubType.Sidearm,
+  ItemSubType.AutoRifle,
+  ItemSubType.PulseRifle,
+  ItemSubType.ScoutRifle,
+  ItemSubType.SubmachineGun,
+  ItemSubType.Bow,
+  ItemSubType.FusionRifle,
+  ItemSubType.Glaive,
+  ItemSubType.TraceRifle,
+  ItemSubType.Shotgun,
+  ItemSubType.SniperRifle,
+  ItemSubType.GrenadeLauncher,
+  ItemSubType.FusionRifleLine,
+  ItemSubType.Machinegun,
+  ItemSubType.RocketLauncher,
+  ItemSubType.Sword,
+];
