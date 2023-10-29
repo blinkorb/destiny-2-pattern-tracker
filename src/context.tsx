@@ -111,7 +111,9 @@ const StateProvider = ({ children }: PropsWithChildren) => {
 
         if (dbRef.current) {
           Object.entries(nextState.persistent ?? {}).forEach(([key, value]) => {
-            setDBValue(dbRef.current!, key as DBStore, value);
+            if (value !== prev.persistent?.[key as DBStore]) {
+              setDBValue(dbRef.current!, key as DBStore, value);
+            }
           });
         }
 
