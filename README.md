@@ -43,3 +43,8 @@ If you are on a Mac you can edit `/private/etc/hosts` and add the following line
 - Install dependencies with `npm ci`
 - Run the dev server with `npm run dev`
 - To rebuild after changes run `npm run build` (ideally in another terminal window)
+
+### Run Linting, Type-checking, and Tests
+
+- To run all linting, type-checking, and tests run `npm test`
+- To format files run `npm run format`
