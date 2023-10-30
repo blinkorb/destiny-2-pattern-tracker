@@ -15,6 +15,8 @@ const useStyles = createUseStyles((theme) => ({
     padding: 12,
     backgroundColor: theme.BACKGROUND,
     fontSize: 14,
+    gap: 4,
+    flexWrap: 'wrap',
   },
   p: {
     margin: 0,
