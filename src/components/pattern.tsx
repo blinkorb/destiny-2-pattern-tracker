@@ -1,15 +1,17 @@
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import {
   DamageTypeResponse,
+  EquipmentSlotResponse,
   ItemsResponse,
   PatternWithCompletion,
 } from '../types.js';
 import AmmoTypeIcon from './ammo-type-icon.js';
 import DamageTypeIcon from './damage-type-icon.js';
 import LoadingDots from './loading-dots.js';
+import Popover from './popover.js';
 
 const useStyles = createUseStyles((theme) => ({
   listItem: {
@@ -18,9 +20,6 @@ const useStyles = createUseStyles((theme) => ({
     position: 'relative',
     padding: 0,
     margin: 0,
-    '&:hover $listTextWrapper': {
-      display: 'flex',
-    },
   },
   listItemLoaded: {
     '& $listIconWrapper': {
@@ -47,24 +46,24 @@ const useStyles = createUseStyles((theme) => ({
     width: '100%',
     height: '100%',
   },
-  listTextWrapper: {
-    display: 'none',
-    position: 'absolute',
-    width: 200,
-    top: '100%',
-    left: 0,
-    flexDirection: 'column',
-    padding: 8,
-    backgroundColor: theme.BACKGROUND,
-    zIndex: 3,
-    pointerEvents: 'none',
-  },
   listTitle: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 4,
     fontSize: 16,
     margin: 0,
+    marginBottom: 2,
   },
   listFlavor: {
     fontSize: 12,
+    margin: 0,
+    marginBottom: 4,
+    fontStyle: 'italic',
+    color: theme.BORDER_FAINT,
+  },
+  listSlot: {
+    fontSize: 14,
     margin: 0,
   },
   progress: {
@@ -99,6 +98,18 @@ const useStyles = createUseStyles((theme) => ({
       width: 16,
     },
   },
+  popoverIconWrapper: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 4,
+  },
+  damageTypeIconPopover: {
+    width: 14,
+    height: 14,
+  },
+  ammoTypeIconPopover: {
+    width: 18,
+  },
 }));
 
 const Pattern = ({
@@ -107,13 +118,16 @@ const Pattern = ({
   hasProfile,
   items,
   damageType,
+  equipmentSlot,
 }: {
   pattern: PatternWithCompletion;
   userLoadingState: boolean;
   hasProfile: boolean;
   items: ItemsResponse | undefined;
   damageType: DamageTypeResponse | undefined;
+  equipmentSlot: EquipmentSlotResponse | undefined;
 }) => {
+  const [listItemRef, setListItemRef] = useState<HTMLElement | null>(null);
   const styles = useStyles();
 
   const item = useMemo(() => {
@@ -146,10 +160,28 @@ const Pattern = ({
     return damageTypeDisplay?.hasIcon ? damageTypeDisplay.icon : undefined;
   }, [damageType, item]);
 
+  const equipmentSlotText = useMemo(() => {
+    if (!equipmentSlot || !item) {
+      return undefined;
+    }
+
+    const equipmentSlotHash = item.equippingBlock?.equipmentSlotTypeHash;
+
+    if (typeof equipmentSlotHash === 'undefined') {
+      return undefined;
+    }
+
+    const equipmentSlotDisplay =
+      equipmentSlot[equipmentSlotHash]?.displayProperties.name;
+
+    return equipmentSlotDisplay;
+  }, [equipmentSlot, item]);
+
   const initialLoad = !hasProfile && userLoadingState;
 
   return (
     <li
+      ref={setListItemRef}
       key={pattern.hash}
       className={classNames(styles.listItem, {
         [styles.listItemLoaded]: !initialLoad && hasProfile,
@@ -184,10 +216,23 @@ const Pattern = ({
           )) ?? <>#/#</>
         )}
       </div>
-      <div className={styles.listTextWrapper}>
-        <p className={styles.listTitle}>{pattern.displayProperties.name}</p>
+      <Popover rootRef={listItemRef} width={200}>
+        <p className={styles.listTitle}>
+          {pattern.displayProperties.name}
+          <span className={styles.popoverIconWrapper}>
+            <DamageTypeIcon
+              className={styles.damageTypeIconPopover}
+              damageTypeIcon={damageTypeIcon}
+            />
+            <AmmoTypeIcon
+              className={styles.ammoTypeIconPopover}
+              ammoType={item?.equippingBlock?.ammoType}
+            />
+          </span>
+        </p>
         <p className={styles.listFlavor}>{pattern.flavorText}</p>
-      </div>
+        <p className={styles.listSlot}>{equipmentSlotText}</p>
+      </Popover>
     </li>
   );
 };

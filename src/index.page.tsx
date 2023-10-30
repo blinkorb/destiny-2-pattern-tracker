@@ -805,6 +805,7 @@ const Home = () => {
                               pattern={pattern}
                               items={state.persistent?.items}
                               damageType={state.persistent?.damageType}
+                              equipmentSlot={state.persistent?.equipmentSlot}
                             />
                           ))}
                       </ul>
@@ -826,6 +827,7 @@ const Home = () => {
                 pattern={pattern}
                 items={state.persistent?.items}
                 damageType={state.persistent?.damageType}
+                equipmentSlot={state.persistent?.equipmentSlot}
               />
             ))}
           </ul>
