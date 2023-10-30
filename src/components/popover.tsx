@@ -76,10 +76,11 @@ const Popover = ({
 
     const onKeyPress = (event: KeyboardEvent) => {
       if (
-        event.key === ' ' ||
-        event.key === 'Space' ||
-        event.key === 'Enter' ||
-        event.key === 'Return'
+        event.currentTarget === event.target &&
+        (event.key === ' ' ||
+          event.key === 'Space' ||
+          event.key === 'Enter' ||
+          event.key === 'Return')
       ) {
         event.preventDefault();
 
