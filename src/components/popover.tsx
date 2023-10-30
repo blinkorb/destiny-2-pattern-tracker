@@ -1,11 +1,16 @@
-import React, { memo, PropsWithChildren, useEffect, useState } from 'react';
+import React, {
+  CSSProperties,
+  memo,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
   popover: {
     display: 'none',
     position: 'absolute',
-    top: '100%',
     flexDirection: 'column',
     padding: 8,
     backgroundColor: theme.BACKGROUND,
@@ -25,13 +30,25 @@ const Popover = ({
   width: number;
   rootRef: HTMLElement | null;
 }>) => {
-  const [align, setAlign] = useState<'left' | 'right' | null>(null);
+  const [align, setAlign] = useState<CSSProperties | null>(null);
   const styles = useStyles();
 
   useEffect(() => {
     const onMouseOver = () => {
-      const left = rootRef?.getBoundingClientRect().left ?? 0;
-      setAlign(left + width >= globalThis.window.innerWidth ? 'right' : 'left');
+      const rootRect = rootRef?.getBoundingClientRect();
+      const top = rootRect?.top ?? 0;
+      const left = rootRect?.left ?? 0;
+
+      const alignHorizontal =
+        left + width >= globalThis.window.innerWidth ? 'right' : 'left';
+      const alignVertical =
+        top + 300 >= globalThis.window.innerHeight ? 'bottom' : 'top';
+
+      setAlign({
+        display: 'flex',
+        [alignHorizontal]: 0,
+        [alignVertical]: '100%',
+      });
     };
 
     const onMouseOut = () => {
@@ -48,10 +65,7 @@ const Popover = ({
   }, [rootRef, width]);
 
   return (
-    <div
-      className={styles.popover}
-      style={align ? { display: 'flex', [align]: 0, width } : { width }}
-    >
+    <div className={styles.popover} style={{ ...align, width }}>
       {children}
     </div>
   );
