@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { useTranslate } from '../translations.js';
+import LinkIcon from './link-icon.js';
 
 const useStyles = createUseStyles((theme) => ({
   footer: {
@@ -35,6 +36,7 @@ const Footer = () => {
           target="_blank"
         >
           {translate('contribute')}
+          <LinkIcon />
         </Link>
       </p>
     </footer>
