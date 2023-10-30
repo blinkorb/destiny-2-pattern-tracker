@@ -197,6 +197,8 @@ const Pattern = ({
         [styles.listItemLoaded]: !initialLoad && hasProfile,
         [styles.listItemComplete]: pattern.complete,
       })}
+      tabIndex={0}
+      title={pattern.displayProperties.name}
     >
       <div className={styles.listIconWrapper}>
         {pattern.displayProperties.hasIcon && (
