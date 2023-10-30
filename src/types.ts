@@ -308,6 +308,13 @@ export enum DamageType {
   Strand = 7,
 }
 
+export enum AmmoType {
+  None = 0,
+  Primary = 1,
+  Special = 2,
+  Heavy = 3,
+}
+
 export interface PresentationNodeReference {
   presentationNodeHash: number;
   nodeDisplayPriority: number;
@@ -478,4 +485,4 @@ export interface DamageTypeItem {
   index: number;
 }
 
-export type DamageTypeResponse = Record<string, DamageType>;
+export type DamageTypeResponse = Record<string, DamageTypeItem>;

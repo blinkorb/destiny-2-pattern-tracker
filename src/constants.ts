@@ -706,7 +706,7 @@ export const THEME = {
   TEXT: '#fff',
   BORDER: '#ddd',
   BORDER_FAINT: '#aaa',
-  HIGHLIGHT: '#8ddd87',
+  HIGHLIGHT: '#7af48b',
   BRAND: '#ff2c68',
 } satisfies DefaultTheme;
 

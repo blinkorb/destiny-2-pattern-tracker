@@ -98,10 +98,13 @@ const useStyles = createUseStyles((theme) => ({
     borderColor: theme.BORDER_FAINT,
   },
   groupTitle: {
-    fontSize: 16,
+    fontSize: 14,
     padding: 0,
     margin: 0,
     marginBottom: 8,
+    '@media all and (min-width: 768px)': {
+      fontSize: 16,
+    },
   },
   subGroupList: {
     display: 'flex',
@@ -800,6 +803,8 @@ const Home = () => {
                               userLoadingState={userLoadingState}
                               hasProfile={!!profile}
                               pattern={pattern}
+                              items={state.persistent?.items}
+                              damageType={state.persistent?.damageType}
                             />
                           ))}
                       </ul>
@@ -819,6 +824,8 @@ const Home = () => {
                 userLoadingState={userLoadingState}
                 hasProfile={!!profile}
                 pattern={pattern}
+                items={state.persistent?.items}
+                damageType={state.persistent?.damageType}
               />
             ))}
           </ul>
