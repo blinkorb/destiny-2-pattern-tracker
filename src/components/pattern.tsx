@@ -1,6 +1,6 @@
 import { Link } from '@blinkorb/resolute';
 import classNames from 'classnames';
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { D2_FOUNDRY_URL } from '../constants.js';
@@ -11,11 +11,11 @@ import {
   ItemsResponse,
   PatternWithCompletion,
 } from '../types.js';
+import usePopover from '../use-popover.js';
 import AmmoTypeIcon from './ammo-type-icon.js';
 import DamageTypeIcon from './damage-type-icon.js';
 import LinkIcon from './link-icon.js';
 import LoadingDots from './loading-dots.js';
-import Popover from './popover.js';
 
 const useStyles = createUseStyles((theme) => ({
   listItem: {
@@ -107,6 +107,18 @@ const useStyles = createUseStyles((theme) => ({
       width: 16,
     },
   },
+  popover: {
+    display: 'none',
+    position: 'absolute',
+    flexDirection: 'column',
+    padding: 8,
+    backgroundColor: theme.BACKGROUND,
+    border: '1px solid',
+    borderColor: theme.BORDER_FAINT,
+    boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.5)',
+    zIndex: 3,
+    borderRadius: 2,
+  },
   popoverIconWrapper: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -123,6 +135,7 @@ const useStyles = createUseStyles((theme) => ({
 
 const Pattern = ({
   pattern,
+  group,
   userLoadingState,
   hasProfile,
   items,
@@ -130,6 +143,7 @@ const Pattern = ({
   equipmentSlot,
 }: {
   pattern: PatternWithCompletion;
+  group: string;
   userLoadingState: boolean;
   hasProfile: boolean;
   items: ItemsResponse | undefined;
@@ -137,7 +151,10 @@ const Pattern = ({
   equipmentSlot: EquipmentSlotResponse | undefined;
 }) => {
   const translate = useTranslate();
-  const [listItemRef, setListItemRef] = useState<HTMLElement | null>(null);
+  const { rootProps, popoverProps } = usePopover({
+    id: `${group}-${pattern.hash.toString()}`,
+    width: 200,
+  });
   const styles = useStyles();
 
   const item = useMemo(() => {
@@ -191,14 +208,13 @@ const Pattern = ({
 
   return (
     <li
-      ref={setListItemRef}
       key={pattern.hash}
       className={classNames(styles.listItem, {
         [styles.listItemLoaded]: !initialLoad && hasProfile,
         [styles.listItemComplete]: pattern.complete,
       })}
-      tabIndex={0}
       title={pattern.displayProperties.name}
+      {...rootProps}
     >
       <div className={styles.listIconWrapper}>
         {pattern.displayProperties.hasIcon && (
@@ -228,7 +244,7 @@ const Pattern = ({
           )) ?? <>#/#</>
         )}
       </div>
-      <Popover rootRef={listItemRef} width={200}>
+      <div className={styles.popover} {...popoverProps}>
         <p className={styles.listTitle}>
           {pattern.displayProperties.name}
           <span className={styles.popoverIconWrapper}>
@@ -260,7 +276,7 @@ const Pattern = ({
             <LinkIcon />
           </Link>
         )}
-      </Popover>
+      </div>
     </li>
   );
 };

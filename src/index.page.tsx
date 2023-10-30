@@ -800,6 +800,7 @@ const Home = () => {
                           .map((pattern) => (
                             <Pattern
                               key={pattern.hash}
+                              group={group.key}
                               userLoadingState={userLoadingState}
                               hasProfile={!!profile}
                               pattern={pattern}
@@ -822,6 +823,7 @@ const Home = () => {
             {ungroupedPatternsWithCompletion.map((pattern) => (
               <Pattern
                 key={pattern.hash}
+                group="ungrouped"
                 userLoadingState={userLoadingState}
                 hasProfile={!!profile}
                 pattern={pattern}

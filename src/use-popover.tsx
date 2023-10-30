@@ -1,37 +1,10 @@
-import React, {
-  CSSProperties,
-  memo,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
-import { createUseStyles } from 'react-jss';
+import { CSSProperties, useEffect, useMemo, useState } from 'react';
 
-const useStyles = createUseStyles((theme) => ({
-  popover: {
-    display: 'none',
-    position: 'absolute',
-    flexDirection: 'column',
-    padding: 8,
-    backgroundColor: theme.BACKGROUND,
-    border: '1px solid',
-    borderColor: theme.BORDER_FAINT,
-    boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.5)',
-    zIndex: 3,
-    borderRadius: 2,
-  },
-}));
-
-const Popover = ({
-  rootRef,
-  width,
-  children,
-}: PropsWithChildren<{
-  width: number;
-  rootRef: HTMLElement | null;
-}>) => {
-  const [align, setAlign] = useState<CSSProperties | null>(null);
-  const styles = useStyles();
+const usePopover = ({ width, id }: { width: number; id: string }) => {
+  const [rootRef, setRootRef] = useState<HTMLElement | null>(null);
+  const [popoverStyles, setPopoverStyles] = useState<CSSProperties | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const onMouseOver = () => {
@@ -44,7 +17,7 @@ const Popover = ({
       const alignVertical =
         top + 300 >= globalThis.window.innerHeight ? 'bottom' : 'top';
 
-      setAlign({
+      setPopoverStyles({
         display: 'flex',
         [alignHorizontal]: 0,
         [alignVertical]: '100%',
@@ -52,7 +25,7 @@ const Popover = ({
     };
 
     const onMouseOut = () => {
-      setAlign(null);
+      setPopoverStyles(undefined);
     };
 
     const onFocusOut = (event: FocusEvent) => {
@@ -70,7 +43,7 @@ const Popover = ({
       }
 
       if (!isNestedElement) {
-        setAlign(null);
+        setPopoverStyles(undefined);
       }
     };
 
@@ -93,7 +66,7 @@ const Popover = ({
         const alignVertical =
           top + 300 >= globalThis.window.innerHeight ? 'bottom' : 'top';
 
-        setAlign((prev) => {
+        setPopoverStyles((prev) => {
           if (!prev) {
             return {
               display: 'flex',
@@ -102,7 +75,7 @@ const Popover = ({
             };
           }
 
-          return null;
+          return undefined;
         });
       }
     };
@@ -120,11 +93,26 @@ const Popover = ({
     };
   }, [rootRef, width]);
 
-  return (
-    <div className={styles.popover} style={{ ...align, width }}>
-      {children}
-    </div>
+  return useMemo(
+    () => ({
+      rootProps: {
+        ref: setRootRef,
+        id,
+        'aria-expanded': !!popoverStyles,
+        role: 'button',
+        tabindex: 0,
+      },
+      popoverProps: {
+        style: {
+          ...popoverStyles,
+          width,
+        },
+        'aria-labelledby': id,
+        role: 'region',
+      },
+    }),
+    [id, popoverStyles, width]
   );
 };
 
-export default memo(Popover);
+export default usePopover;
