@@ -14,8 +14,8 @@ import React, {
 
 import { DBStore, SESSION_STORAGE_KEY } from './constants.js';
 import { createDB, getDBValue, setDBValue } from './db.js';
-import { StateContextValue } from './types.js';
-import { getLanguage } from './utils.js';
+import { PersistentState, StateContextValue } from './types.js';
+import { allKeysAreDefined, getLanguage } from './utils.js';
 
 const StateContext = createContext<
   readonly [
@@ -74,14 +74,15 @@ const StateProvider = ({ children }: PropsWithChildren) => {
         )
       );
 
+      const persistent = Object.fromEntries(
+        dbValues
+      ) as unknown as Partial<PersistentState>;
+
       setState((prev) => {
         return {
           ...prev,
           dbInitialized: true,
-          persistent: {
-            ...prev.persistent,
-            ...Object.fromEntries(dbValues),
-          },
+          persistent: allKeysAreDefined(persistent) ? persistent : null,
         };
       });
     };
@@ -110,7 +111,9 @@ const StateProvider = ({ children }: PropsWithChildren) => {
 
         if (dbRef.current) {
           Object.entries(nextState.persistent ?? {}).forEach(([key, value]) => {
-            setDBValue(dbRef.current!, key as DBStore, value);
+            if (value !== prev.persistent?.[key as DBStore]) {
+              setDBValue(dbRef.current!, key as DBStore, value);
+            }
           });
         }
 

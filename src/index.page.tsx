@@ -24,26 +24,29 @@ import {
   SessionStore,
 } from './constants.js';
 import { useStateContext } from './context.js';
+import { bySlotThenTypeThenName, onlyPatternsAndOutput } from './items.js';
 import { TranslationKey, useTranslate } from './translations.js';
 import {
   APIErrorCode,
   APIResponse,
   ComponentType,
+  DamageTypeResponse,
+  EquipmentSlotResponse,
   ItemsResponse,
   ItemType,
   LinkedProfilesResponse,
   ManifestResponse,
   MembershipType,
   PatternWithCompletion,
-  PresentationNode,
+  PresentationNodeItem,
+  PresentationNodeItemWithPresentationNodes,
+  PresentationNodeItemWithRecords,
   PresentationNodesResponse,
-  PresentationNodeWithPresentationNodes,
-  PresentationNodeWithRecords,
   ProfileResponse,
   RecordsResponse,
   TokenResponse,
 } from './types.js';
-import { logError, logInfo } from './utils.js';
+import { exists, logError, logInfo } from './utils.js';
 
 export const title = 'Destiny 2 Pattern Tracker';
 export const description =
@@ -95,10 +98,13 @@ const useStyles = createUseStyles((theme) => ({
     borderColor: theme.BORDER_FAINT,
   },
   groupTitle: {
-    fontSize: 16,
+    fontSize: 14,
     padding: 0,
     margin: 0,
     marginBottom: 8,
+    '@media all and (min-width: 768px)': {
+      fontSize: 16,
+    },
   },
   subGroupList: {
     display: 'flex',
@@ -359,13 +365,24 @@ const Home = () => {
     }
 
     const loadManifest = async () => {
-      const { meta, manifest, items, records, presentationNodes } =
-        state.persistent ?? {};
+      const {
+        meta,
+        manifest,
+        items,
+        records,
+        presentationNodes,
+        damageType,
+        equipmentSlot,
+      } = state.persistent ?? {};
 
       if (
         meta &&
         manifest &&
         items &&
+        records &&
+        presentationNodes &&
+        damageType &&
+        equipmentSlot &&
         meta.manifestUpdated >= Date.now() - MANIFEST_TIMEOUT &&
         meta.manifestLanguage === state.language
       ) {
@@ -406,40 +423,44 @@ const Home = () => {
 
       setManifestLoadingState('loadingItems');
 
-      const nextItems =
+      const [
+        nextItems,
+        nextRecords,
+        nextPresentationNodes,
+        nextDamageType,
+        nextEquipmentSlot,
+      ] = await Promise.all([
         meta &&
         items &&
         manifest?.version === nextManifest.version &&
         meta.manifestLanguage === state.language
           ? items
-          : await fetch(
+          : fetch(
               `${process.env.CLIENT_API_URL}${
                 nextManifest.jsonWorldComponentContentPaths[state.language]
                   .DestinyInventoryItemDefinition
               }`
-            ).then<ItemsResponse>(async (response) => {
-              if (response.ok) {
-                return JSON.parse(await response.text());
-              }
+            )
+              .then<ItemsResponse>(async (response) => {
+                if (response.ok) {
+                  return JSON.parse(await response.text());
+                }
 
-              try {
-                return JSON.parse(await response.text());
-              } catch (error) {
-                logError(error);
+                try {
+                  return JSON.parse(await response.text());
+                } catch (error) {
+                  logError(error);
 
-                throw new Error('Failed to request items');
-              }
-            });
-
-      setManifestLoadingState('loadingRecords');
-
-      const nextRecords =
+                  throw new Error('Failed to request items');
+                }
+              })
+              .then((i) => onlyPatternsAndOutput(i)),
         meta &&
         records &&
         manifest?.version === nextManifest.version &&
         meta.manifestLanguage === state.language
           ? records
-          : await fetch(
+          : fetch(
               `${process.env.CLIENT_API_URL}${
                 nextManifest.jsonWorldComponentContentPaths[state.language]
                   .DestinyRecordDefinition
@@ -456,17 +477,13 @@ const Home = () => {
 
                 throw new Error('Failed to request records');
               }
-            });
-
-      setManifestLoadingState('loadingPresentationNodes');
-
-      const nextPresentationNodes =
+            }),
         meta &&
         presentationNodes &&
         manifest?.version === nextManifest.version &&
         meta.manifestLanguage === state.language
           ? presentationNodes
-          : await fetch(
+          : fetch(
               `${process.env.CLIENT_API_URL}${
                 nextManifest.jsonWorldComponentContentPaths[state.language]
                   .DestinyPresentationNodeDefinition
@@ -483,7 +500,54 @@ const Home = () => {
 
                 throw new Error('Failed to request presentation nodes');
               }
-            });
+            }),
+        meta &&
+        damageType &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? damageType
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyDamageTypeDefinition
+              }`
+            ).then<DamageTypeResponse>(async (response) => {
+              if (response.ok) {
+                return JSON.parse(await response.text());
+              }
+
+              try {
+                return JSON.parse(await response.text());
+              } catch (error) {
+                logError(error);
+
+                throw new Error('Failed to request damage types');
+              }
+            }),
+        meta &&
+        equipmentSlot &&
+        manifest?.version === nextManifest.version &&
+        meta.manifestLanguage === state.language
+          ? equipmentSlot
+          : fetch(
+              `${process.env.CLIENT_API_URL}${
+                nextManifest.jsonWorldComponentContentPaths[state.language]
+                  .DestinyEquipmentSlotDefinition
+              }`
+            ).then<EquipmentSlotResponse>(async (response) => {
+              if (response.ok) {
+                return JSON.parse(await response.text());
+              }
+
+              try {
+                return JSON.parse(await response.text());
+              } catch (error) {
+                logError(error);
+
+                throw new Error('Failed to request equipment slots');
+              }
+            }),
+      ]);
 
       const nextMeta = {
         ...meta,
@@ -500,6 +564,8 @@ const Home = () => {
           items: nextItems,
           records: nextRecords,
           presentationNodes: nextPresentationNodes,
+          damageType: nextDamageType,
+          equipmentSlot: nextEquipmentSlot,
         },
       }));
 
@@ -531,7 +597,7 @@ const Home = () => {
 
     const reduceRecordHashes = (
       acc: readonly number[],
-      node: PresentationNode | undefined
+      node: PresentationNodeItem | undefined
     ): readonly number[] => {
       if (!node) {
         return acc;
@@ -539,7 +605,7 @@ const Home = () => {
 
       if (node.children.presentationNodes.length) {
         return (
-          node as PresentationNodeWithPresentationNodes
+          node as PresentationNodeItemWithPresentationNodes
         ).children.presentationNodes.reduce(
           (acc2, subNode) =>
             reduceRecordHashes(
@@ -551,7 +617,7 @@ const Home = () => {
       } else if (node.children.records.length) {
         return [
           ...acc,
-          ...(node as PresentationNodeWithRecords).children.records.map(
+          ...(node as PresentationNodeItemWithRecords).children.records.map(
             (record) => record.recordHash
           ),
         ];
@@ -616,8 +682,22 @@ const Home = () => {
           complete,
         };
       })
-      .filter((item): item is Exclude<typeof item, null> => !!item);
-  }, [patternRecordMap, patterns, profile?.profileRecords.data.records]);
+      .filter(exists)
+      .sort((a, b) =>
+        bySlotThenTypeThenName(
+          a,
+          b,
+          state.persistent?.items,
+          state.persistent?.equipmentSlot
+        )
+      );
+  }, [
+    patternRecordMap,
+    patterns,
+    profile?.profileRecords.data.records,
+    state.persistent?.equipmentSlot,
+    state.persistent?.items,
+  ]);
 
   const ungroupedPatternsWithCompletion = useMemo(() => {
     return patternsWithCompletion.filter(
@@ -634,23 +714,45 @@ const Home = () => {
       ...group,
       groups: group.groups.map((subGroup) => ({
         ...subGroup,
-        items: subGroup.items.map((item) => {
-          const patternWithCompletion = patternsWithCompletion.find(
-            (pattern) => pattern.hash === item.patternHash
-          );
+        items: subGroup.items
+          .map((item) => {
+            const patternWithCompletion = patternsWithCompletion.find(
+              (pattern) => pattern.hash === item.patternHash
+            );
 
-          if (!patternWithCompletion) {
-            logInfo(`Could not find pattern for hash "${item.patternHash}"`);
-          }
+            if (!patternWithCompletion) {
+              logInfo(`Could not find pattern for hash "${item.patternHash}"`);
+            }
 
-          return {
-            ...item,
-            patternWithCompletion,
-          };
-        }),
+            return {
+              ...item,
+              patternWithCompletion,
+            };
+          })
+          .filter(
+            (
+              item
+            ): item is Required<{
+              patternWithCompletion: PatternWithCompletion;
+              patternHash: number;
+            }> => !!item.patternWithCompletion
+          )
+          .sort((a, b) =>
+            bySlotThenTypeThenName(
+              a.patternWithCompletion,
+              b.patternWithCompletion,
+              state.persistent?.items,
+              state.persistent?.equipmentSlot
+            )
+          ),
       })),
     }));
-  }, [isClientRender, patternsWithCompletion]);
+  }, [
+    isClientRender,
+    patternsWithCompletion,
+    state.persistent?.equipmentSlot,
+    state.persistent?.items,
+  ]);
 
   const shouldRenderLoading =
     !isClientRender || !state.dbInitialized || manifestLoadingState !== false;
@@ -694,18 +796,17 @@ const Home = () => {
                       <ul className={styles.subGroupItemList}>
                         {subGroup.items
                           .map((item) => item.patternWithCompletion)
-                          .filter(
-                            (
-                              pattern
-                            ): pattern is Exclude<typeof pattern, undefined> =>
-                              !!pattern
-                          )
+                          .filter(exists)
                           .map((pattern) => (
                             <Pattern
                               key={pattern.hash}
+                              group={group.key}
                               userLoadingState={userLoadingState}
                               hasProfile={!!profile}
                               pattern={pattern}
+                              items={state.persistent?.items}
+                              damageType={state.persistent?.damageType}
+                              equipmentSlot={state.persistent?.equipmentSlot}
                             />
                           ))}
                       </ul>
@@ -722,9 +823,13 @@ const Home = () => {
             {ungroupedPatternsWithCompletion.map((pattern) => (
               <Pattern
                 key={pattern.hash}
+                group="ungrouped"
                 userLoadingState={userLoadingState}
                 hasProfile={!!profile}
                 pattern={pattern}
+                items={state.persistent?.items}
+                damageType={state.persistent?.damageType}
+                equipmentSlot={state.persistent?.equipmentSlot}
               />
             ))}
           </ul>

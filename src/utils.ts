@@ -34,3 +34,14 @@ export const logError = (...inputs: readonly any[]) => {
     globalThis.console.error(...inputs);
   }
 };
+
+export const exists = <T>(input: T): input is Exclude<T, null | undefined> => {
+  return typeof input !== 'undefined' && input !== null;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const allKeysAreDefined = <T extends Record<string, any>>(
+  input: Partial<T>
+): input is T => {
+  return Object.values(input).every((value) => typeof value !== 'undefined');
+};

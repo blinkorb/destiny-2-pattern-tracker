@@ -1,13 +1,15 @@
 import { DefaultTheme } from 'react-jss';
 
-import { WeaponGroupings } from './types.js';
+import { ItemSubType, WeaponGroupings } from './types.js';
+
+export const D2_FOUNDRY_URL = 'https://d2foundry.gg/w/';
 
 export const MANIFEST_TIMEOUT = 1000 * 60 * 5;
 export const POLLING_INTERVAL = 1000 * 60;
 
 export const SESSION_STORAGE_KEY = 'd2pt';
 export const DB_NAME = 'd2pt';
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 
 export enum SessionStore {
   TOKEN = 'token',
@@ -20,6 +22,8 @@ export enum DBStore {
   ITEMS = 'items',
   RECORDS = 'records',
   PRESENTATION_NODES = 'presentationNodes',
+  EQUIPMENT_SLOT = 'equipmentSlot',
+  DAMAGE_TYPE = 'damageType',
 }
 
 export const DEFAULT_LANGUAGE = 'en' as const;
@@ -702,8 +706,29 @@ export const ROOT_PRESENTATION_NODE_HASH = 2642502414;
 export const THEME = {
   BACKGROUND: '#222',
   TEXT: '#fff',
+  SUB_TEXT: '#aaa',
   BORDER: '#ddd',
-  BORDER_FAINT: '#aaa',
-  HIGHLIGHT: '#8ddd87',
+  BORDER_FAINT: '#888',
+  HIGHLIGHT: '#7af48b',
   BRAND: '#ff2c68',
 } satisfies DefaultTheme;
+
+export const ITEM_SUB_TYPE_SORT = [
+  ItemSubType.HandCannon,
+  ItemSubType.Sidearm,
+  ItemSubType.AutoRifle,
+  ItemSubType.PulseRifle,
+  ItemSubType.ScoutRifle,
+  ItemSubType.SubmachineGun,
+  ItemSubType.Bow,
+  ItemSubType.FusionRifle,
+  ItemSubType.Glaive,
+  ItemSubType.TraceRifle,
+  ItemSubType.Shotgun,
+  ItemSubType.SniperRifle,
+  ItemSubType.GrenadeLauncher,
+  ItemSubType.FusionRifleLine,
+  ItemSubType.Machinegun,
+  ItemSubType.RocketLauncher,
+  ItemSubType.Sword,
+];
