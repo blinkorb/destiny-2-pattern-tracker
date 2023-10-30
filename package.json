@@ -1,7 +1,7 @@
 {
   "name": "destiny-2-pattern-tracker",
   "version": "0.0.0",
-  "description": "Destiny 2 Weapon Pattern Tracker",
+  "description": "Track your Destiny 2 craftable weapons & pattern progress",
   "main": "src/index.tsx",
   "type": "module",
   "scripts": {
