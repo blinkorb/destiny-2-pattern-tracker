@@ -1,7 +1,10 @@
+import { Link } from '@blinkorb/resolute';
 import classNames from 'classnames';
 import React, { memo, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
+import { D2_FOUNDRY_URL } from '../constants.js';
+import { useTranslate } from '../translations.js';
 import {
   DamageTypeResponse,
   EquipmentSlotResponse,
@@ -10,6 +13,7 @@ import {
 } from '../types.js';
 import AmmoTypeIcon from './ammo-type-icon.js';
 import DamageTypeIcon from './damage-type-icon.js';
+import LinkIcon from './link-icon.js';
 import LoadingDots from './loading-dots.js';
 import Popover from './popover.js';
 
@@ -58,11 +62,16 @@ const useStyles = createUseStyles((theme) => ({
   listFlavor: {
     fontSize: 12,
     margin: 0,
-    marginBottom: 4,
+    marginBottom: 8,
     fontStyle: 'italic',
     color: theme.BORDER_FAINT,
   },
   listSlot: {
+    fontSize: 14,
+    margin: 0,
+    marginBottom: 8,
+  },
+  d2FoundryLink: {
     fontSize: 14,
     margin: 0,
   },
@@ -127,6 +136,7 @@ const Pattern = ({
   damageType: DamageTypeResponse | undefined;
   equipmentSlot: EquipmentSlotResponse | undefined;
 }) => {
+  const translate = useTranslate();
   const [listItemRef, setListItemRef] = useState<HTMLElement | null>(null);
   const styles = useStyles();
 
@@ -232,6 +242,17 @@ const Pattern = ({
         </p>
         <p className={styles.listFlavor}>{pattern.flavorText}</p>
         <p className={styles.listSlot}>{equipmentSlotText}</p>
+        {item && (
+          <Link
+            className={styles.d2FoundryLink}
+            href={`${D2_FOUNDRY_URL}${item.hash}`}
+            title={translate('exploreStatsAndRollsOnD2Foundry')}
+            target="_blank"
+          >
+            {translate('exploreStatsAndRolls')}
+            <LinkIcon />
+          </Link>
+        )}
       </Popover>
     </li>
   );

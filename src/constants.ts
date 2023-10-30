@@ -2,6 +2,8 @@ import { DefaultTheme } from 'react-jss';
 
 import { ItemSubType, WeaponGroupings } from './types.js';
 
+export const D2_FOUNDRY_URL = 'https://d2foundry.gg/w/';
+
 export const MANIFEST_TIMEOUT = 1000 * 60 * 5;
 export const POLLING_INTERVAL = 1000 * 60;
 

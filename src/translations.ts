@@ -47,6 +47,8 @@ const TRANSLATIONS = {
     exotic: 'Exotic',
     quest: 'Quest',
     ungroupedWorldDrop: 'Ungrouped / World Drop',
+    exploreStatsAndRolls: 'Explore stats and rolls',
+    exploreStatsAndRollsOnD2Foundry: 'Explore stats and rolls on D2Foundry',
   },
 } satisfies Partial<Record<SupportedLanguage, Partial<Record<string, string>>>>;
 
