@@ -64,7 +64,7 @@ const useStyles = createUseStyles((theme) => ({
     margin: 0,
     marginBottom: 8,
     fontStyle: 'italic',
-    color: theme.BORDER_FAINT,
+    color: theme.SUB_TEXT,
   },
   listSlot: {
     fontSize: 14,

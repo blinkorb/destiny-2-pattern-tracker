@@ -706,8 +706,9 @@ export const ROOT_PRESENTATION_NODE_HASH = 2642502414;
 export const THEME = {
   BACKGROUND: '#222',
   TEXT: '#fff',
+  SUB_TEXT: '#aaa',
   BORDER: '#ddd',
-  BORDER_FAINT: '#aaa',
+  BORDER_FAINT: '#888',
   HIGHLIGHT: '#7af48b',
   BRAND: '#ff2c68',
 } satisfies DefaultTheme;
