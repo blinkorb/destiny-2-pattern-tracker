@@ -373,6 +373,8 @@ export interface DestinyItem {
   collectibleHash?: number;
   itemType: ItemType;
   itemSubType: ItemSubType;
+  itemTypeDisplayName: string;
+  itemTypeAndTierDisplayName: string;
   displayProperties: DisplayProperties;
   flavorText: string;
   crafting?: ItemCrafting;

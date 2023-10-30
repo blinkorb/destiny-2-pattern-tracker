@@ -241,7 +241,12 @@ const Pattern = ({
           </span>
         </p>
         <p className={styles.listFlavor}>{pattern.flavorText}</p>
-        <p className={styles.listSlot}>{equipmentSlotText}</p>
+        {item && (
+          <p className={styles.listSlot}>{item.itemTypeAndTierDisplayName}</p>
+        )}
+        {equipmentSlotText && (
+          <p className={styles.listSlot}>{equipmentSlotText}</p>
+        )}
         {item && (
           <Link
             className={styles.d2FoundryLink}
