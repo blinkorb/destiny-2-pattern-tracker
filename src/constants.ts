@@ -498,11 +498,11 @@ export const GROUPINGS: WeaponGroupings = [
             patternHash: 1399383222,
           },
           {
-            name: 'Fang of Ir YÃÂ»t',
+            name: 'Fang of Ir Yût',
             patternHash: 3272233517,
           },
           {
-            name: 'Song of Ir YÃÂ»t',
+            name: 'Song of Ir Yût',
             patternHash: 1122822939,
           },
         ],
