@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/blinkorb/destiny-2-pattern-tracker#readme",
   "dependencies": {
-    "@blinkorb/resolute": "^0.0.1",
+    "@blinkorb/resolute": "^0.0.5",
     "@types/react": "^18.2.28",
     "@types/react-dom": "^18.2.13",
     "@types/uuid": "^9.0.5",
