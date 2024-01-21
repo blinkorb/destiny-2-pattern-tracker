@@ -151,19 +151,19 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Imperial Decree',
-            patternHash: 2216711429,
+            patternHash: 12689138,
           },
           {
             name: 'Throne-Cleaver',
-            patternHash: 602820804,
+            patternHash: 3300916517,
           },
           {
             name: 'Goldtusk',
-            patternHash: 602820806,
+            patternHash: 1293340523,
           },
           {
             name: "Death's Razor",
-            patternHash: 602820807,
+            patternHash: 1617767144,
           },
         ],
       },
@@ -232,27 +232,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'No Reprieve',
-            patternHash: 600973584,
+            patternHash: 391424247,
           },
           {
             name: 'Blood Feud',
-            patternHash: 4255710333,
+            patternHash: 1190630124,
           },
           {
             name: "Brigand's Law",
-            patternHash: 2192971810,
+            patternHash: 3838104479,
           },
           {
             name: 'Tarnished Mettle',
-            patternHash: 541650229,
+            patternHash: 894815256,
           },
           {
             name: "Planck's Stride",
-            patternHash: 2839071082,
+            patternHash: 961659165,
           },
           {
             name: 'Sailspy Pitchglass',
-            patternHash: 4176833041,
+            patternHash: 3512723176,
           },
         ],
       },
@@ -266,27 +266,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Tears of Contrition',
-            patternHash: 2569300390,
+            patternHash: 2727300465,
           },
           {
             name: 'Firefright',
-            patternHash: 2090638254,
+            patternHash: 3976812977,
           },
           {
             name: 'Without Remorse',
-            patternHash: 1644173130,
+            patternHash: 78936099,
           },
           {
             name: "Nezarec's Whisper",
-            patternHash: 718127891,
+            patternHash: 1782799708,
           },
           {
             name: 'Hollow Denial',
-            patternHash: 945540117,
+            patternHash: 4032870516,
           },
           {
             name: 'Bump in the Night',
-            patternHash: 2115513552,
+            patternHash: 3783874323,
           },
         ],
       },
@@ -295,19 +295,19 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Austringer',
-            patternHash: 3028588557,
+            patternHash: 2491859962,
           },
           {
             name: 'Drang (Baroque)',
-            patternHash: 3097097481,
+            patternHash: 1821223866,
           },
           {
             name: 'CALUS Mini-Tool',
-            patternHash: 952833197,
+            patternHash: 1624712678,
           },
           {
             name: 'Beloved',
-            patternHash: 2278246612,
+            patternHash: 3882576915,
           },
         ],
       },
@@ -321,27 +321,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Sweet Sorrow',
-            patternHash: 2587734818,
+            patternHash: 3257476351,
           },
           {
             name: 'Piece of Mind',
-            patternHash: 4195995171,
+            patternHash: 1921074348,
           },
           {
             name: 'Under Your Skin',
-            patternHash: 3517716296,
+            patternHash: 3409008359,
           },
           {
             name: 'Explosive Personality',
-            patternHash: 578487175,
+            patternHash: 4116268584,
           },
           {
             name: 'Thoughtless',
-            patternHash: 2354821643,
+            patternHash: 3153641810,
           },
           {
             name: 'Recurrent Impact',
-            patternHash: 1058494657,
+            patternHash: 1750107494,
           },
         ],
       },
@@ -386,15 +386,15 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'The Enigma',
-            patternHash: 757218923,
+            patternHash: 3448423264,
           },
           {
             name: 'Empirical Evidence',
-            patternHash: 2343708185,
+            patternHash: 152053718,
           },
           {
             name: 'Red Herring',
-            patternHash: 1055778551,
+            patternHash: 1854958272,
           },
         ],
       },
@@ -409,11 +409,11 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'The Epicurean',
-            patternHash: 1607199395,
+            patternHash: 3781421154,
           },
           {
             name: 'Fixed Odds',
-            patternHash: 1992355759,
+            patternHash: 2307652914,
           },
         ],
       },
@@ -443,11 +443,11 @@ export const GROUPINGS: WeaponGroupings = [
             patternHash: 1399383222,
           },
           {
-            name: 'Fang of Ir Yût',
+            name: 'Fang of Ir YÃ»t',
             patternHash: 3272233517,
           },
           {
-            name: 'Song of Ir Yût',
+            name: 'Song of Ir YÃ»t',
             patternHash: 1122822939,
           },
         ],
@@ -496,27 +496,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: "Zaouli's Bane",
-            patternHash: 1769856981,
+            patternHash: 2654424424,
           },
           {
             name: 'Smite of Merain',
-            patternHash: 3036070042,
+            patternHash: 3288327145,
           },
           {
             name: "Midha's Reckoning",
-            patternHash: 899111755,
+            patternHash: 4179698628,
           },
           {
             name: 'Doom of Chelchis',
-            patternHash: 2095727101,
+            patternHash: 479338636,
           },
           {
             name: 'Defiance of Yasmin',
-            patternHash: 3671347212,
+            patternHash: 1188055361,
           },
           {
             name: "Qullim's Terminus",
-            patternHash: 1163414343,
+            patternHash: 4057799392,
           },
         ],
       },
@@ -530,27 +530,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Submission',
-            patternHash: 1727384791,
+            patternHash: 73105274,
           },
           {
             name: 'Insidious',
-            patternHash: 895097684,
+            patternHash: 2700944123,
           },
           {
             name: 'Deliverance',
-            patternHash: 2139190869,
+            patternHash: 3994951926,
           },
           {
             name: 'Forbearance',
-            patternHash: 2275145211,
+            patternHash: 3956489672,
           },
           {
             name: "Lubrae's Ruin",
-            patternHash: 4139166068,
+            patternHash: 1965716037,
           },
           {
             name: 'Cataclysmic',
-            patternHash: 2933132219,
+            patternHash: 517759838,
           },
         ],
       },
@@ -568,27 +568,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Posterity',
-            patternHash: 535966746,
+            patternHash: 3800406805,
           },
           {
             name: 'Heritage',
-            patternHash: 2808508647,
+            patternHash: 3240588666,
           },
           {
             name: 'Trustee',
-            patternHash: 4191526098,
+            patternHash: 1363479969,
           },
           {
             name: 'Succession',
-            patternHash: 1231218137,
+            patternHash: 283210738,
           },
           {
             name: 'Bequest',
-            patternHash: 1320769880,
+            patternHash: 1697198067,
           },
           {
             name: 'Commemoration',
-            patternHash: 600737282,
+            patternHash: 4154790607,
           },
         ],
       },
@@ -649,19 +649,19 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Come to Pass',
-            patternHash: 2855733397,
+            patternHash: 2768185586,
           },
           {
             name: 'Tarnation',
-            patternHash: 2371706208,
+            patternHash: 1272458185,
           },
           {
             name: 'Fel Taradiddle',
-            patternHash: 138845773,
+            patternHash: 2743521280,
           },
           {
             name: "Father's Sins",
-            patternHash: 408327437,
+            patternHash: 59063294,
           },
         ],
       },
@@ -670,15 +670,15 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Edge of Action',
-            patternHash: 1236909978,
+            patternHash: 4284608583,
           },
           {
             name: 'Edge of Concurrence',
-            patternHash: 71883942,
+            patternHash: 3127165437,
           },
           {
             name: 'Edge of Intent',
-            patternHash: 3245885923,
+            patternHash: 1665561856,
           },
         ],
       },
@@ -692,15 +692,15 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Edge of Action',
-            patternHash: 0,
+            patternHash: 4284608583,
           },
           {
             name: 'Edge of Concurrence',
-            patternHash: 0,
+            patternHash: 3127165437,
           },
           {
             name: 'Edge of Intent',
-            patternHash: 0,
+            patternHash: 1665561856,
           },
         ],
       },
@@ -714,27 +714,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Pardon Our Dust',
-            patternHash: 2912878255,
+            patternHash: 2521448082,
           },
           {
             name: 'Wastelander M5',
-            patternHash: 3591989262,
+            patternHash: 2299191415,
           },
           {
             name: 'BxR-55 Battler',
-            patternHash: 8500040,
+            patternHash: 2632206613,
           },
           {
             name: 'Retraced Path',
-            patternHash: 2467530584,
+            patternHash: 958118965,
           },
           {
             name: 'Half-Truths',
-            patternHash: 1558048189,
+            patternHash: 1834163582,
           },
           {
             name: 'The Other Half',
-            patternHash: 1558048188,
+            patternHash: 1969364529,
           },
         ],
       },
@@ -748,7 +748,7 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Forensic Nightmare',
-            patternHash: 312678365,
+            patternHash: 1914687106,
           },
         ],
       },
@@ -765,7 +765,7 @@ export const GROUPINGS: WeaponGroupings = [
           },
           {
             name: 'Osteo Striga',
-            patternHash: 3891186874,
+            patternHash: 3364580479,
           },
           {
             name: 'Vexcalibur',
@@ -783,15 +783,15 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Edge of Action',
-            patternHash: 0,
+            patternHash: 4284608583,
           },
           {
             name: 'Edge of Concurrence',
-            patternHash: 0,
+            patternHash: 3127165437,
           },
           {
             name: 'Edge of Intent',
-            patternHash: 0,
+            patternHash: 1665561856,
           },
           {
             name: 'Dead Messenger',
@@ -799,19 +799,19 @@ export const GROUPINGS: WeaponGroupings = [
           },
           {
             name: 'Revision Zero',
-            patternHash: 0,
+            patternHash: 2658740569,
           },
           {
             name: "Dead Man's Tale",
-            patternHash: 0,
+            patternHash: 1377069894,
           },
           {
             name: 'Vexcalibur',
-            patternHash: 0,
+            patternHash: 4223953031,
           },
           {
             name: 'Wish-Keeper',
-            patternHash: 0,
+            patternHash: 682995262,
           },
         ],
       },
