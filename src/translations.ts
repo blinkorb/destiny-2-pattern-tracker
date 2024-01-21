@@ -23,6 +23,7 @@ const TRANSLATIONS = {
     pleaseLoginAgain: 'Please login again.',
     login: 'Login',
     logout: 'Logout',
+    seasonOfTheWish: 'Season of the Wish',
     seasonOfTheWitch: 'Season of the Witch',
     seasonOfTheDeep: 'Season of the Deep',
     seasonOfDefiance: 'Season of Defiance',

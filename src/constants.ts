@@ -45,6 +45,61 @@ export const SUPPORTED_LANGUAGES = [
 ] as const;
 
 export const GROUPINGS: WeaponGroupings = [
+  {
+    key: 'seasonOfTheWish',
+    groups: [
+      {
+        key: 'wish',
+        items: [
+          {
+            name: 'Supercluster',
+            patternHash: 0,
+          },
+          {
+            name: 'Scatter Signal',
+            patternHash: 0,
+          },
+          {
+            name: 'Appetence',
+            patternHash: 0,
+          },
+          {
+            name: 'Lethophobia',
+            patternHash: 0,
+          },
+          {
+            name: 'Scalar Potential',
+            patternHash: 0,
+          },
+          {
+            name: 'Doomed Petitioner',
+            patternHash: 0,
+          },
+        ],
+      },
+      {
+        key: 'undying',
+        items: [
+          {
+            name: 'Imperative',
+            patternHash: 0,
+          },
+          {
+            name: 'Subjunctive',
+            patternHash: 0,
+          },
+          {
+            name: 'Adhortative',
+            patternHash: 0,
+          },
+          {
+            name: 'Optative',
+            patternHash: 0,
+          },
+        ],
+      },
+    ],
+  },
   // Seasons
   {
     key: 'seasonOfTheWitch',
