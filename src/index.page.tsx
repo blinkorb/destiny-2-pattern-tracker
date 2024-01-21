@@ -16,7 +16,7 @@ import LoadingDots from './components/loading-dots.js';
 import Navbar, { NAVBAR_HEIGHT } from './components/navbar.js';
 import Pattern from './components/pattern.js';
 import {
-  GROUPED_PATTERNS,
+  FLAT_GROUPED_PATTERN_IDS,
   GROUPINGS,
   MANIFEST_TIMEOUT,
   POLLING_INTERVAL,
@@ -701,7 +701,7 @@ const Home = () => {
 
   const ungroupedPatternsWithCompletion = useMemo(() => {
     return patternsWithCompletion.filter(
-      (pattern) => !GROUPED_PATTERNS.includes(pattern.hash)
+      (pattern) => !FLAT_GROUPED_PATTERN_IDS.includes(pattern.hash)
     );
   }, [patternsWithCompletion]);
 

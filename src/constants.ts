@@ -688,7 +688,7 @@ export const GROUPINGS: WeaponGroupings = [
   },
 ];
 
-export const GROUPED_PATTERNS = GROUPINGS.reduce<readonly number[]>(
+export const FLAT_GROUPED_PATTERN_IDS = GROUPINGS.reduce<readonly number[]>(
   (acc, grouping) => {
     return grouping.groups.reduce<readonly number[]>(
       (acc2, group) => [
