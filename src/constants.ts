@@ -53,27 +53,27 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Supercluster',
-            patternHash: 0,
+            patternHash: 867013661,
           },
           {
             name: 'Scatter Signal',
-            patternHash: 0,
+            patternHash: 3043056966,
           },
           {
             name: 'Appetence',
-            patternHash: 0,
+            patternHash: 1842249748,
           },
           {
             name: 'Lethophobia',
-            patternHash: 0,
+            patternHash: 3094270359,
           },
           {
             name: 'Scalar Potential',
-            patternHash: 0,
+            patternHash: 4184075964,
           },
           {
             name: 'Doomed Petitioner',
-            patternHash: 0,
+            patternHash: 936723022,
           },
         ],
       },
@@ -82,19 +82,19 @@ export const GROUPINGS: WeaponGroupings = [
         items: [
           {
             name: 'Imperative',
-            patternHash: 0,
+            patternHash: 3327760373,
           },
           {
             name: 'Subjunctive',
-            patternHash: 0,
+            patternHash: 3690763405,
           },
           {
             name: 'Adhortative',
-            patternHash: 0,
+            patternHash: 3174951648,
           },
           {
             name: 'Optative',
-            patternHash: 0,
+            patternHash: 499726185,
           },
         ],
       },
@@ -498,11 +498,11 @@ export const GROUPINGS: WeaponGroupings = [
             patternHash: 1399383222,
           },
           {
-            name: 'Fang of Ir YÃ»t',
+            name: 'Fang of Ir YÃÂ»t',
             patternHash: 3272233517,
           },
           {
-            name: 'Song of Ir YÃ»t',
+            name: 'Song of Ir YÃÂ»t',
             patternHash: 1122822939,
           },
         ],
