@@ -2,6 +2,22 @@
 
 **Track your Destiny 2 craftable weapons & pattern progress**
 
+## Updating Grouping/Hashes
+
+Every so often Bungie release updates and some of the weapon/pattern hashes change.
+
+To update the hashes you first need to run the dev server and wait for the manifest to load.
+
+Once loaded, open the console and run:
+
+```js
+updatePatternHashes();
+```
+
+This will output the new content to be placed in `constants.ts`.
+
+Paste the content into `constants.ts` and check if everything is now grouped correctly. You may need to add new weapons for the latest season. To automatically add the hashes for new weapons, simply add a new group and list the weapons, but set all their patternHashes to 0 and re-run the update function mentioned above.
+
 ## Contributing
 
 ### Setup a Destiny API App
