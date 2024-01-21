@@ -735,6 +735,7 @@ const Home = () => {
             ): item is Required<{
               patternWithCompletion: PatternWithCompletion;
               patternHash: number;
+              name: string;
             }> => !!item.patternWithCompletion
           )
           .sort((a, b) =>
@@ -753,6 +754,54 @@ const Home = () => {
     state.persistent?.equipmentSlot,
     state.persistent?.items,
   ]);
+
+  useEffect(() => {
+    if (isClientRender && patterns && process.env.NODE_ENV === 'development') {
+      globalThis.window.updatePatternHashes = async () => {
+        const source: string = (
+          await fetch('/constants.js.map').then((res) => res.json())
+        ).sourcesContent[0];
+
+        const newHashes = GROUPINGS.reduce(
+          (acc, group) =>
+            group.groups.reduce(
+              (acc2, subGroup) =>
+                subGroup.items.reduce((acc3, item) => {
+                  const match = patterns.find(
+                    (pattern) => pattern.displayProperties.name === item.name
+                  );
+
+                  if (!match) {
+                    logError(
+                      `Could not find pattern for "${
+                        item.name
+                      }" in "${translate(group.key)}"`
+                    );
+                    return acc3;
+                  }
+
+                  if (match.hash === item.patternHash) {
+                    return acc3;
+                  }
+
+                  return acc3.replace(
+                    `patternHash: ${item.patternHash},`,
+                    `patternHash: ${match.hash},`
+                  );
+                }, acc2),
+              acc
+            ),
+          source
+        );
+
+        logInfo(newHashes);
+      };
+    }
+
+    return () => {
+      globalThis.window.updatePatternHashes = undefined;
+    };
+  }, [isClientRender, patterns, translate]);
 
   const shouldRenderLoading =
     !isClientRender || !state.dbInitialized || manifestLoadingState !== false;

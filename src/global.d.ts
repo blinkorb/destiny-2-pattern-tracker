@@ -5,3 +5,7 @@ declare namespace NodeJS {
     CLIENT_API_KEY: string;
   }
 }
+
+interface Window {
+  updatePatternHashes?: () => void;
+}

@@ -454,6 +454,7 @@ export interface PatternWithCompletion extends DestinyItem {
 export interface WeaponSubGroup {
   key: string;
   items: readonly {
+    name: string;
     patternHash: number;
     patternWithCompletion?: PatternWithCompletion;
   }[];
