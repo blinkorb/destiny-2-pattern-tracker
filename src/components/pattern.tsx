@@ -1,6 +1,6 @@
 import { Link } from '@blinkorb/resolute';
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { Fragment, memo, useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { D2_FOUNDRY_URL } from '../constants.js';
@@ -238,9 +238,9 @@ const Pattern = ({
           <LoadingDots />
         ) : (
           pattern.objectives?.map((objective) => (
-            <>
+            <Fragment key={objective.objectiveHash}>
               {objective.progress}/{objective.completionValue}
-            </>
+            </Fragment>
           )) ?? <>#/#</>
         )}
       </div>

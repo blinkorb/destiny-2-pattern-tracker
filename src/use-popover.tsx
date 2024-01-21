@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useMemo, useState } from 'react';
+import { CSSProperties, HTMLProps, useEffect, useMemo, useState } from 'react';
 
 const usePopover = ({ width, id }: { width: number; id: string }) => {
   const [rootRef, setRootRef] = useState<HTMLElement | null>(null);
@@ -94,23 +94,27 @@ const usePopover = ({ width, id }: { width: number; id: string }) => {
   }, [rootRef, width]);
 
   return useMemo(
-    () => ({
-      rootProps: {
-        ref: setRootRef,
-        id,
-        'aria-expanded': !!popoverStyles,
-        role: 'button',
-        tabindex: 0,
-      },
-      popoverProps: {
-        style: {
-          ...popoverStyles,
-          width,
+    () =>
+      ({
+        rootProps: {
+          ref: setRootRef,
+          id,
+          'aria-expanded': !!popoverStyles,
+          role: 'button',
+          tabIndex: 0,
         },
-        'aria-labelledby': id,
-        role: 'region',
+        popoverProps: {
+          style: {
+            ...popoverStyles,
+            width,
+          },
+          'aria-labelledby': id,
+          role: 'region',
+        },
+      }) as const satisfies {
+        rootProps: HTMLProps<HTMLElement>;
+        popoverProps: HTMLProps<HTMLElement>;
       },
-    }),
     [id, popoverStyles, width]
   );
 };
