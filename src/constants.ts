@@ -45,6 +45,61 @@ export const SUPPORTED_LANGUAGES = [
 ] as const;
 
 export const GROUPINGS: WeaponGroupings = [
+  {
+    key: 'seasonOfTheWish',
+    groups: [
+      {
+        key: 'wish',
+        items: [
+          {
+            name: 'Supercluster',
+            patternHash: 867013661,
+          },
+          {
+            name: 'Scatter Signal',
+            patternHash: 3043056966,
+          },
+          {
+            name: 'Appetence',
+            patternHash: 1842249748,
+          },
+          {
+            name: 'Lethophobia',
+            patternHash: 3094270359,
+          },
+          {
+            name: 'Scalar Potential',
+            patternHash: 4184075964,
+          },
+          {
+            name: 'Doomed Petitioner',
+            patternHash: 936723022,
+          },
+        ],
+      },
+      {
+        key: 'undying',
+        items: [
+          {
+            name: 'Imperative',
+            patternHash: 3327760373,
+          },
+          {
+            name: 'Subjunctive',
+            patternHash: 3690763405,
+          },
+          {
+            name: 'Adhortative',
+            patternHash: 3174951648,
+          },
+          {
+            name: 'Optative',
+            patternHash: 499726185,
+          },
+        ],
+      },
+    ],
+  },
   // Seasons
   {
     key: 'seasonOfTheWitch',
@@ -443,11 +498,11 @@ export const GROUPINGS: WeaponGroupings = [
             patternHash: 1399383222,
           },
           {
-            name: 'Fang of Ir YÃ»t',
+            name: 'Fang of Ir Yût',
             patternHash: 3272233517,
           },
           {
-            name: 'Song of Ir YÃ»t',
+            name: 'Song of Ir Yût',
             patternHash: 1122822939,
           },
         ],

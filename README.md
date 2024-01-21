@@ -16,7 +16,7 @@ updatePatternHashes();
 
 This will output the new content to be placed in `constants.ts`.
 
-Paste the content into `constants.ts` and check if everything is now grouped correctly. You may need to add new weapons for the latest season. To automatically add the hashes for new weapons, simply add a new group and list the weapons, but set all their patternHashes to 0 and re-run the update function mentioned above.
+Paste the content into `constants.ts`. Check that no names have been butchered and that everything is now grouped correctly. You may need to add new weapons for the latest season. To automatically add the hashes for new weapons, simply add a new group and list the weapons, but set all their patternHashes to 0 and re-run the update function mentioned above.
 
 ## Contributing
 
