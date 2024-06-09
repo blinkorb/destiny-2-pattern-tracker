@@ -46,6 +46,56 @@ export const SUPPORTED_LANGUAGES = [
 
 export const GROUPINGS: WeaponGroupings = [
   {
+    key: 'episodeEchoes',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: 'Aberrant Action',
+            patternHash: 1445084364,
+          },
+          {
+            name: 'Chronophage',
+            patternHash: 2863166953,
+          },
+          {
+            name: 'Corrasion',
+            patternHash: 2936404289,
+          },
+          {
+            name: 'Faith-Keeper',
+            patternHash: 2829695646,
+          },
+          {
+            name: 'Ill Omen',
+            patternHash: 2215061418,
+          },
+          {
+            name: 'Lost Signal',
+            patternHash: 3013473326,
+          },
+          {
+            name: 'Sightline Survey',
+            patternHash: 2903082064,
+          },
+          {
+            name: 'Speleologist',
+            patternHash: 199782552,
+          },
+          {
+            name: 'Timeworn Wayfarer',
+            patternHash: 3463996868,
+          },
+          {
+            name: 'Veiled Threat',
+            patternHash: 1788440897,
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: 'theFinalShapeGhost',
     groups: [
       {
