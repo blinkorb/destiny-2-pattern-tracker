@@ -826,6 +826,14 @@ export const GROUPINGS: WeaponGroupings = [
             name: 'Vexcalibur',
             patternHash: 4223953031,
           },
+          {
+            name: 'Outbreak Perfected',
+            patternHash: 3342878104,
+          },
+          {
+            name: 'Whisper of the Worm',
+            patternHash: 3739748319,
+          },
         ],
       },
     ],
@@ -867,6 +875,14 @@ export const GROUPINGS: WeaponGroupings = [
           {
             name: 'Wish-Keeper',
             patternHash: 682995262,
+          },
+          {
+            name: 'Outbreak Perfected',
+            patternHash: 3342878104,
+          },
+          {
+            name: 'Whisper of the Worm',
+            patternHash: 3739748319,
           },
         ],
       },
