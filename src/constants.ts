@@ -68,14 +68,6 @@ export const GROUPINGS: WeaponGroupings = [
             patternHash: 2829695646,
           },
           {
-            name: 'Ill Omen',
-            patternHash: 2215061418,
-          },
-          {
-            name: 'Lost Signal',
-            patternHash: 3013473326,
-          },
-          {
             name: 'Sightline Survey',
             patternHash: 2903082064,
           },
@@ -90,6 +82,19 @@ export const GROUPINGS: WeaponGroupings = [
           {
             name: 'Veiled Threat',
             patternHash: 1788440897,
+          },
+        ],
+      },
+      {
+        key: 'secondary',
+        items: [
+          {
+            name: 'Ill Omen',
+            patternHash: 2215061418,
+          },
+          {
+            name: 'Lost Signal',
+            patternHash: 3013473326,
           },
         ],
       },
