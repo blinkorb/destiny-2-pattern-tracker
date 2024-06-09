@@ -46,6 +46,103 @@ export const SUPPORTED_LANGUAGES = [
 
 export const GROUPINGS: WeaponGroupings = [
   {
+    key: 'episodeEchoes',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: 'Aberrant Action',
+            patternHash: 1445084364,
+          },
+          {
+            name: 'Chronophage',
+            patternHash: 2863166953,
+          },
+          {
+            name: 'Corrasion',
+            patternHash: 2936404289,
+          },
+          {
+            name: 'Faith-Keeper',
+            patternHash: 2829695646,
+          },
+          {
+            name: 'Sightline Survey',
+            patternHash: 2903082064,
+          },
+          {
+            name: 'Speleologist',
+            patternHash: 199782552,
+          },
+          {
+            name: 'Timeworn Wayfarer',
+            patternHash: 3463996868,
+          },
+          {
+            name: 'Veiled Threat',
+            patternHash: 1788440897,
+          },
+        ],
+      },
+      {
+        key: 'secondary',
+        items: [
+          {
+            name: 'Ill Omen',
+            patternHash: 2215061418,
+          },
+          {
+            name: 'Lost Signal',
+            patternHash: 3013473326,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'thePaleHeart',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: 'The Call',
+            patternHash: 1356804119,
+          },
+          {
+            name: 'No Hesitation',
+            patternHash: 3181377148,
+          },
+          {
+            name: 'Someday',
+            patternHash: 2419687452,
+          },
+          {
+            name: 'Embraced Identity',
+            patternHash: 1884632560,
+          },
+          {
+            name: 'Pro Memoria',
+            patternHash: 3158567669,
+          },
+          {
+            name: 'False Idols',
+            patternHash: 132021549,
+          },
+          {
+            name: 'Bold Endings',
+            patternHash: 4167838203,
+          },
+          {
+            name: 'Axial Lacuna',
+            patternHash: 3207258057,
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: 'seasonOfTheWish',
     groups: [
       {
@@ -826,6 +923,14 @@ export const GROUPINGS: WeaponGroupings = [
             name: 'Vexcalibur',
             patternHash: 4223953031,
           },
+          {
+            name: 'Outbreak Perfected',
+            patternHash: 3342878104,
+          },
+          {
+            name: 'Whisper of the Worm',
+            patternHash: 3739748319,
+          },
         ],
       },
     ],
@@ -867,6 +972,14 @@ export const GROUPINGS: WeaponGroupings = [
           {
             name: 'Wish-Keeper',
             patternHash: 682995262,
+          },
+          {
+            name: 'Outbreak Perfected',
+            patternHash: 3342878104,
+          },
+          {
+            name: 'Whisper of the Worm',
+            patternHash: 3739748319,
           },
         ],
       },

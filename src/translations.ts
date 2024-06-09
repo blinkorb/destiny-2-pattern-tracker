@@ -50,6 +50,8 @@ const TRANSLATIONS = {
     ungroupedWorldDrop: 'Ungrouped / World Drop',
     exploreStatsAndRolls: 'Explore stats and rolls',
     exploreStatsAndRollsOnD2Foundry: 'Explore stats and rolls on D2Foundry',
+    thePaleHeart: 'The Pale Heart',
+    episodeEchoes: 'Episode: Echoes',
   },
 } satisfies Partial<Record<SupportedLanguage, Partial<Record<string, string>>>>;
 
