@@ -46,6 +46,48 @@ export const SUPPORTED_LANGUAGES = [
 
 export const GROUPINGS: WeaponGroupings = [
   {
+    key: 'theFinalShapeGhost',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: 'The Call',
+            patternHash: 1356804119,
+          },
+          {
+            name: 'No Hesitation',
+            patternHash: 3181377148,
+          },
+          {
+            name: 'Someday',
+            patternHash: 2419687452,
+          },
+          {
+            name: 'Embraced Identity',
+            patternHash: 1884632560,
+          },
+          {
+            name: 'Pro Memoria',
+            patternHash: 3158567669,
+          },
+          {
+            name: 'False Idols',
+            patternHash: 132021549,
+          },
+          {
+            name: 'Bold Endings',
+            patternHash: 4167838203,
+          },
+          {
+            name: 'Axial Lacuna',
+            patternHash: 3207258057,
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: 'seasonOfTheWish',
     groups: [
       {
