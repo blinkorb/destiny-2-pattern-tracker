@@ -96,7 +96,7 @@ export const GROUPINGS: WeaponGroupings = [
     ],
   },
   {
-    key: 'theFinalShapeGhost',
+    key: 'thePaleHeart',
     groups: [
       {
         key: 'standard',
