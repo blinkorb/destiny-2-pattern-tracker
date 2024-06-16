@@ -404,15 +404,35 @@ export interface ProfileRecordObjective {
   visible: boolean;
 }
 
+export interface CharacterRecordObjective {
+  objectiveHash: number;
+  progress: number;
+  completionValue: number;
+  complete: boolean;
+  visible: boolean;
+}
+
 export interface ProfileRecord {
   state: number;
   objectives: readonly ProfileRecordObjective[];
+}
+
+export interface CharacterRecord {
+  state: number;
+  objectives: readonly CharacterRecordObjective[];
 }
 
 export interface ProfileResponse {
   profileRecords: {
     data: {
       records: Record<string, ProfileRecord>;
+    };
+  };
+  characterRecords: {
+    data: {
+      [i: string]: {
+        records: Record<string, CharacterRecord>;
+      };
     };
   };
 }
