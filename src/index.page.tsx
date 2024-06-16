@@ -134,6 +134,15 @@ const useStyles = createUseStyles((theme) => ({
   },
 }));
 
+const getRecordForHash = (
+  profile: ProfileResponse | undefined,
+  recordHash: number
+) =>
+  profile?.profileRecords.data.records[recordHash] ??
+  Object.values(profile?.characterRecords.data ?? {}).find(
+    (character) => character.records[recordHash]
+  )?.records[recordHash];
+
 const Home = () => {
   const styles = useStyles();
   const router = useRouter();
@@ -672,8 +681,7 @@ const Home = () => {
           return null;
         }
 
-        const objectives =
-          profile?.profileRecords.data.records[recordHash]?.objectives;
+        const objectives = getRecordForHash(profile, recordHash)?.objectives;
         const complete = objectives?.every((objective) => objective.complete);
 
         return {
@@ -694,7 +702,7 @@ const Home = () => {
   }, [
     patternRecordMap,
     patterns,
-    profile?.profileRecords.data.records,
+    profile,
     state.persistent?.equipmentSlot,
     state.persistent?.items,
   ]);
