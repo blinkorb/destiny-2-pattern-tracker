@@ -52,6 +52,7 @@ const TRANSLATIONS = {
     exploreStatsAndRollsOnD2Foundry: 'Explore stats and rolls on D2Foundry',
     thePaleHeart: 'The Pale Heart',
     episodeEchoes: 'Episode: Echoes',
+    salvationsEdge: "Salvation's Edge",
   },
 } satisfies Partial<Record<SupportedLanguage, Partial<Record<string, string>>>>;
 
