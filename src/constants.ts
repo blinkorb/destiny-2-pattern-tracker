@@ -573,6 +573,44 @@ export const GROUPINGS: WeaponGroupings = [
   },
   // Raids
   {
+    key: 'salvationsEdge',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: 'Euphony',
+            patternHash: 123,
+          },
+          {
+            name: 'Critical Anomaly',
+            patternHash: 301934549,
+          },
+          {
+            name: 'Imminence',
+            patternHash: 2420892292,
+          },
+          {
+            name: 'Non-Denouement',
+            patternHash: 1832224525,
+          },
+          {
+            name: 'Summum Bonum',
+            patternHash: 1394189878,
+          },
+          {
+            name: 'Forthcoming Deviance',
+            patternHash: 3207113547,
+          },
+          {
+            name: 'Nullify',
+            patternHash: 4256748573,
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: 'crotasEnd',
     groups: [
       {
