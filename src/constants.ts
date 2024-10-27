@@ -781,10 +781,44 @@ export const GROUPINGS: WeaponGroupings = [
       },
     ],
   },
-  // {
-  //   key: 'gardenOfSalvation',
-  //   groups: [{ key: 'standard', items: [] }],
-  // },
+  {
+    key: 'gardenOfSalvation',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: "Zealot's Reward",
+            patternHash: 1589731829,
+          },
+          {
+            name: 'Prophet of Doom',
+            patternHash: 1614844056,
+          },
+          {
+            name: 'Ancient Gospel',
+            patternHash: 3057173367,
+          },
+          {
+            name: 'Omniscient Eye',
+            patternHash: 1673788124,
+          },
+          {
+            name: 'Accrued Redemption',
+            patternHash: 2079565734,
+          },
+          {
+            name: 'Reckless Oracle',
+            patternHash: 2856514080,
+          },
+          {
+            name: 'Sacred Provenance',
+            patternHash: 3872122818,
+          },
+        ],
+      },
+    ],
+  },
   {
     key: 'lastWish',
     groups: [
