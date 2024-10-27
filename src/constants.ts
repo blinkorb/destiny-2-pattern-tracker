@@ -580,10 +580,6 @@ export const GROUPINGS: WeaponGroupings = [
         key: 'standard',
         items: [
           {
-            name: 'Euphony',
-            patternHash: 123,
-          },
-          {
             name: 'Critical Anomaly',
             patternHash: 301934549,
           },
