@@ -966,6 +966,10 @@ export const GROUPINGS: WeaponGroupings = [
             name: 'Whisper of the Worm',
             patternHash: 3739748319,
           },
+          {
+            name: 'Choir of One',
+            patternHash: 3083189562,
+          },
         ],
       },
     ],
@@ -1015,6 +1019,10 @@ export const GROUPINGS: WeaponGroupings = [
           {
             name: 'Whisper of the Worm',
             patternHash: 3739748319,
+          },
+          {
+            name: 'Choir of One',
+            patternHash: 3083189562,
           },
         ],
       },
