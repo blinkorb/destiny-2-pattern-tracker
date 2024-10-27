@@ -580,10 +580,6 @@ export const GROUPINGS: WeaponGroupings = [
         key: 'standard',
         items: [
           {
-            name: 'Euphony',
-            patternHash: 123,
-          },
-          {
             name: 'Critical Anomaly',
             patternHash: 301934549,
           },
@@ -785,10 +781,44 @@ export const GROUPINGS: WeaponGroupings = [
       },
     ],
   },
-  // {
-  //   key: 'gardenOfSalvation',
-  //   groups: [{ key: 'standard', items: [] }],
-  // },
+  {
+    key: 'gardenOfSalvation',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: "Zealot's Reward",
+            patternHash: 1589731829,
+          },
+          {
+            name: 'Prophet of Doom',
+            patternHash: 1614844056,
+          },
+          {
+            name: 'Ancient Gospel',
+            patternHash: 3057173367,
+          },
+          {
+            name: 'Omniscient Eye',
+            patternHash: 1673788124,
+          },
+          {
+            name: 'Accrued Redemption',
+            patternHash: 2079565734,
+          },
+          {
+            name: 'Reckless Oracle',
+            patternHash: 2856514080,
+          },
+          {
+            name: 'Sacred Provenance',
+            patternHash: 3872122818,
+          },
+        ],
+      },
+    ],
+  },
   {
     key: 'lastWish',
     groups: [
@@ -970,6 +1000,10 @@ export const GROUPINGS: WeaponGroupings = [
             name: 'Whisper of the Worm',
             patternHash: 3739748319,
           },
+          {
+            name: 'Choir of One',
+            patternHash: 3083189562,
+          },
         ],
       },
     ],
@@ -1019,6 +1053,10 @@ export const GROUPINGS: WeaponGroupings = [
           {
             name: 'Whisper of the Worm',
             patternHash: 3739748319,
+          },
+          {
+            name: 'Choir of One',
+            patternHash: 3083189562,
           },
         ],
       },
