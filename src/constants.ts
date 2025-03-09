@@ -574,6 +574,40 @@ export const GROUPINGS: WeaponGroupings = [
   },
   // Raids
   {
+    key: 'vaultOfGlass',
+    groups: [
+      {
+        key: 'standard',
+        items: [
+          {
+            name: 'Fatebringer',
+            patternHash: 1718491554,
+          },
+          {
+            name: "Praedyth's Revenge",
+            patternHash: 4237475179,
+          },
+          {
+            name: 'Vision of Confluence',
+            patternHash: 2374669498,
+          },
+          {
+            name: 'Found Verdict',
+            patternHash: 3891407057,
+          },
+          {
+            name: 'Corrective Measure',
+            patternHash: 2024456042,
+          },
+          {
+            name: 'Hezen Vengeance',
+            patternHash: 3415398820,
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: 'salvationsEdge',
     groups: [
       {
@@ -743,10 +777,6 @@ export const GROUPINGS: WeaponGroupings = [
       },
     ],
   },
-  // {
-  //   key: 'vaultOfGlass',
-  //   groups: [{ key: 'standard', items: [] }],
-  // },
   {
     key: 'deepStoneCrypt',
     groups: [
@@ -1057,6 +1087,14 @@ export const GROUPINGS: WeaponGroupings = [
           {
             name: 'Choir of One',
             patternHash: 3083189562,
+          },
+          {
+            name: 'Barrow-Dyad',
+            patternHash: 1388605795,
+          },
+          {
+            name: "Slayer's Fang",
+            patternHash: 1254670671,
           },
         ],
       },
