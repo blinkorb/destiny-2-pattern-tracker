@@ -1034,6 +1034,14 @@ export const GROUPINGS: WeaponGroupings = [
             name: 'Choir of One',
             patternHash: 3083189562,
           },
+          {
+            name: 'Barrow-Dyad',
+            patternHash: 1388605795,
+          },
+          {
+            name: "Slayer's Fang",
+            patternHash: 1254670671,
+          },
         ],
       },
     ],
