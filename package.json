@@ -5,6 +5,7 @@
   "main": "src/index.tsx",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "dev": "resolute dev --https",
     "build": "resolute build",
     "typecheck": "tsc --noEmit",
