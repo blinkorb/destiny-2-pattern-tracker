@@ -30,7 +30,15 @@ const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <p className={styles.p}>{translate('byBlinkOrb')}</p>
+      <p className={styles.p}>
+        <Link
+          title={translate('byBlinkOrb')}
+          href="https://blinkorb.com"
+          target="_blank"
+        >
+          {translate('byBlinkOrb')}
+        </Link>
+      </p>
       <p className={styles.p}>
         <Link
           title={translate('onGitHub')}
