@@ -23,5 +23,6 @@
 .npmignore
 .nvmrc
 .browserslistrc
+.tool-versions
 .env
 LICENSE.txt
